@@ -1,0 +1,1995 @@
+Test - 2788
+Pre-Condition
+Ensure DAT 2 is enabled, if not complete the following steps:
+1. TMS Admin > Credentials:
+a. Authorized User tab > Select User User to open user details
+i. Disable DAT credential
+ii. Enable DAT 2 credential
+iii. Save
+b. Global Services tab > Enable DAT 2 > Save
+Multi-Currency Additional Instructions
+Test Instructions
+1. TMS Admin Configuration > Global Settings section > RateIQ Rate Entry User > Set to User User > Save
+2. TMS Admin > Carrier Markup groups > New Carrier Markup Group 
+a. Name = RateIQ
+b. Save
+3. In the Markup Group Record > Related Tab > Carrier Markups related list > New > Input the following:
+a. Markup Basis = Move 'RateIQ' from available to chosen
+b. Markup Type = Freight
+c. Mode = Truckload
+d. Target Markup Percent = 10
+e. Minimum Markup Percent = 0
+f. Minimum Markup Amount = 0
+g. Transaction Fee = 0
+h. Save
+4. Note the Markup name for use in step 24 and expected results a, b, c, and d
+5. Carrier Markups Related List > New
+a. Markup Basis = Move 'RateIQ' from available to chosen
+b. Markup Type = Fuel
+c. Mode = Truckload
+d. Expiration Date = yesterday
+e. Target Markup Percent = 20
+f. Minimum Markup Percent = 0
+g. Minimum Markup Amount = 0
+h. Transaction Fee = 0
+i. Save
+6. Note the Markup name for use in steps 18, 30, and expected results c, d, e, and f
+7. Carrier Markups Related List > New
+a. Markup Basis = Move 'RateIQ' from available to chosen
+b. Markup Type = Freight+Fuel
+c. Mode = Truckload
+d. Expiration Date = yesterday
+e. Target Markup Percent = 30
+f. Minimum Markup Percent = 0
+g. Minimum Markup Amount = 0
+h. Transaction Fee = 0
+i. Save
+8. Note the Markup name for use in step 31 and expected results g, h, i, and j
+9. App Launcher > Search and select Transportation Profiles > Change list view to 'All'
+a. Find and select Boston Beans > Rates tab > Edit Carrier Markup Group > Search and select RateIQ > Save
+10. TMS Admin > Rate Entry > New Rate Entry > Input the following:
+a. Transportation Profile = Boston Beans
+b. Mode = Truckload
+c. Lane = US to US
+d. Category = Customer
+e. Rate Type = Freight+Fuel
+f. Status = Accepted  
+g. Rate Method = RateIQ+Markup
+h. Save
+11. Note the Rate Entry name for use in step 37, expected results a-j, and post-test steps
+12. Create a quick entry shipment
+a. Customer = Boston Beans 
+b. Mode = Truckload
+c. 1P stop type = Same as Customer
+d. Expected Date = Today
+e. 2D stop type = Account Address
+f. Location = Chicago Cubs
+g. Expected Date = 2 days from today
+h. Line Item Description = Beans
+i. Weight = 10000
+j. Save your load
+13. Note the Load number for use in steps 19, 25, 32 and 39
+14. Snapshot tab > RateIQ LWC > Truckload Rate Calculation:
+a. Note the Fuel value for use in expected results a and b
+b. Note the Freight+Fuel value for use in expected results a and b
+15. FQA > Wait for the Customer Quote to be created
+a. Customer Quote Card > a) Check expected result
+b. Select the Customer Quote name hyperlink to enter the record
+16. Once in the record > Details Tab > Rate Details section > b) Check expected result
+a. Summary tab > Load field > Select the load hyperlink to return to record
+17. Quotes/Invoices tab > Customer Quote related list > In the record row, select the dropdown > Delete > Delete
+18. TMS Admin > Carrier Markup Groups > Select RateIQ > Related tab > Carrier Markups related list > Select the Markup noted step 6 > Edit the Expiration Date field > Set:
+a. Expiration Date = null
+b. Save
+19. App Launcher > Search and select Loads > Select the Load Number noted in step 13
+20. Snapshot tab > RateIQ LWC > Truckload Rate Calculation:
+a. Note the Fuel value for use in expected results c and d
+b. Note the Freight+Fuel value for use in expected results c and d
+21. FQA > Wait for the Customer Quote to be created
+a. Customer Quote Card > c) Check expected result
+b. Select the Customer Quote name hyperlink to enter the record
+22. Once in the record > Details Tab > Rate Details section > d) Check expected result
+a. Summary tab > Load field > Select the load hyperlink to return to record
+23. Quotes/Invoices tab > Customer Quote related list > In the record row, select the dropdown > Delete > Delete
+24. TMS Admin > Carrier Markup Groups > Select RateIQ > Related tab > Carrier Markups related list > Select the Markup noted step 4 > Edit the Expiration Date field > Set:
+a. Expiration Date = Yesterday
+b. Save
+25. App Launcher > Search and select Loads > Select the Load Number noted in step 13
+26. Snapshot tab > RateIQ LWC > Truckload Rate Calculation:
+a. Note the Fuel value for use in expected results e and f
+b. Note the Freight+Fuel value for use in expected results e and f
+27. FQA > Wait for the Customer Quote to be created
+a. Customer Quote Card > e) Check expected result
+b. Select the Customer Quote name hyperlink to enter the record
+28. Once in the record > Details Tab > Rate Details section > f) Check expected result
+a. Summary tab > Load field > Select the load hyperlink to return to record
+29. Quotes/Invoices tab > Customer Quote related list > In the record row, select the dropdown > Delete > Delete
+30. TMS Admin > Carrier Markup Groups > Select RateIQ > Related tab > Carrier Markups related list > Select the Markup noted step 6 > Edit the Expiration Date field > Set:
+a. Expiration Date = Yesterday
+b. Save
+31. TMS Admin > Carrier Markup Groups > Select RateIQ > Related tab > Carrier Markups related list > Select the Markup noted step 8 > Edit the Expiration Date field > Set:
+a. Expiration Date = null
+b. Save
+32. App Launcher > Search and select Loads > Select the Load Number noted in step 13
+33. Snapshot tab > RateIQ LWC > Truckload Rate Calculation:
+a. Note the Fuel value for use in expected results g and h
+b. Note the Freight+Fuel value for use in expected results g and h
+34. FQA > Wait for the Customer Quote to be created
+a. Customer Quote Card > g) Check expected result
+b. Select the Customer Quote name hyperlink to enter the record
+35. Once in the record > Details Tab > Rate Details section > h) Check expected result
+a. Summary tab > Load field > Select the load hyperlink to return to record
+36. Quotes/Invoices tab > Customer Quote related list > In the record row, select the dropdown > Delete > Delete
+37. TMS Admin > Rate Entries > Select the Rate Entry noted in step 11 > Edit the following:
+a. Fuel Surcharge = Revenova FSC 2
+b. Save
+38. Home > Job Monitor LWC > Run the FuelIndexUpdateJob
+a. Wait for the FuelIndexUpdateJob and FuelSurchargeUpdateJob to finish
+39. App Launcher > Search and select Loads > Select the Load Number noted in step 13
+40. Snapshot tab > RateIQ LWC > Truckload Rate Calculation:
+a. Note the Fuel value for use in expected result i and j
+b. Note the Freight+Fuel value for use in expected result i and j
+41. FQA > Wait for the Customer Quote to be created
+a. Customer Quote Card > i) Check expected result
+b. Select the Customer Quote name hyperlink to enter the record
+42. Once in the record > Details Tab > Rate Details section > j) Check expected result
+Expected Result
+a) Ensure a Customer Quote is created and has the following:
+1. The Net Freight Charges have a markup of 10% from the value of [Freight+Fuel charge noted in 14b] - [Fuel charge noted in 14a]
+a. Net Freight Charges = ([Freight+Fuel charge noted in 14b] - [Fuel charge noted in 14a])*1.10
+2. The Fuel Surcharge has no markup and is the Fuel Charge noted in 14a 
+a. Fuel Surcharge = [Fuel Charge noted in 14a]
+3. The Pricing Notes section renders with two rows as follows:
+a. Net Freight Charges [a hyperlink to the Rate Entry noted in step 11]
+b. Net Freight Charges [a hyperlink to the Markup noted in step 4]
+
+b) Ensure the following fields are populated as follows: 
+1. RateIQ Fuel = [Fuel Charge noted in 14a]
+2. RateIQ Total = [Freight+Fuel charge noted in 14b]
+3. RateIQ Freight = [Freight+Fuel charge noted in 14b] - [Fuel Charge noted in 14a]
+4. Freight Charges = ([Freight+Fuel charge noted in 14b] - [Fuel charge noted in 14a])*1.10
+5. Freight Markup = [Markup noted in step 4]
+6. Fuel Surcharge = [Fuel Charge noted in 14a]
+7. Fuel Markup = null
+8. Rate Entry = [Rate Entry noted in step 11]
+
+c) Ensure a Customer Quote is created and has the following:
+1. The Net Freight Charges have a markup of 10% from the value of [Freight+Fuel charge noted in 20b] - [Fuel charge noted in 20a]
+a. Net Freight Charges = ([Freight+Fuel charge noted in 20b] - [Fuel charge noted in 20a])*1.10
+2. The Fuel Surcharge has a markup of 20% from the Fuel charge value noted in 20a
+a. Fuel Surcharge = [Fuel charge noted in 20a]*1.20
+3. The Pricing Notes section renders with three rows as follows:
+a. Net Freight Charges [a hyperlink to the Rate Entry noted in step 11]
+b. Fuel Surcharge [a hyperlink to the Markup noted in step 6]
+c. Net Freight Charges [a hyperlink to the Markup noted in step 4]
+
+d) Ensure the following fields are populated as follows: 
+1. RateIQ Fuel = [Fuel Charge noted in 20a]
+2. RateIQ Total = [Freight+Fuel charge noted in 20b]
+3. RateIQ Freight = [Freight+Fuel charge noted in 20b] - [Fuel Charge noted in 20a]
+4. Freight Charges = ([Freight+Fuel charge noted in 20b] - [Fuel charge noted in 20a])*1.10
+5. Freight Markup = [Markup noted in step 4]
+6. Fuel Surcharge = [Fuel Charge noted in 20a]*1.20
+7. Fuel Markup = [Markup noted in step 6]
+8. Rate Entry = [Rate Entry noted in step 11]
+
+
+e) Ensure a Customer Quote is created and has the following:
+1. The Net Freight Charges has no markup and a value of [Freight+Fuel charge noted in 26b] - [Fuel charge noted in 26a]
+a. Net Freight Charges = [Freight+Fuel charge noted in 26b] - [Fuel charge noted in 26a]
+2. The Fuel Surcharge has a markup of 20% from the Fuel charge value noted in 26a
+a. Fuel Surcharge = [Fuel charge noted in 26a]*1.20
+3. The Pricing Notes section renders with two rows as follows:
+a. Net Freight Charges [a hyperlink to the Rate Entry noted in step 11]
+b. Fuel Surcharge [a hyperlink to the Markup noted in step 6]
+
+f) Ensure the following fields are populated as follows: 
+1. RateIQ Fuel = [Fuel Charge noted in 26a]
+2. RateIQ Total = [Freight+Fuel charge noted in 26b]
+3. RateIQ Freight = [Freight+Fuel charge noted in 26b] - [Fuel Charge noted in 26a]
+4. Freight Charges = [Freight+Fuel charge noted in 26b] - [Fuel charge noted in 26a]
+5. Freight Markup = null
+6. Fuel Surcharge = [Fuel Charge noted in 26a]*1.20
+7. Fuel Markup = [Markup noted in step 6]
+8. Rate Entry = [Rate Entry noted in step 11]
+
+g) Ensure a Customer Quote is created and has the following:
+1. The Net Freight Charges have a markup of 30% from the value of [Freight+Fuel charge noted in 33b] - [Fuel charge noted in 33a]
+a. Net Freight Charges = ([Freight+Fuel charge noted in 33b] - [Fuel charge noted in 33a])*1.30
+2. The Fuel Surcharge has a markup of 30% from the Fuel charge value noted in 33a
+a. Fuel Surcharge = [Fuel charge noted in 33a]*1.30
+3. The Pricing Notes section renders with three rows as follows:
+a. Net Freight Charges [a hyperlink to the Rate Entry noted in step 11]
+b. Net Freight Charges [a hyperlink to the Markup noted in step 8]
+c. Fuel Surcharge [a hyperlink to the Markup noted in step 8]
+
+h) Ensure the following fields are populated as follows: 
+1. RateIQ Fuel = [Fuel Charge noted in 33a]
+2. RateIQ Total = [Freight+Fuel charge noted in 33b]
+3. RateIQ Freight = [Freight+Fuel charge noted in 33b] - [Fuel Charge noted in 33a]
+4. Freight Charges = ([Freight+Fuel charge noted in 33b] - [Fuel charge noted in 33a])*1.30
+5. Freight Markup = [Markup noted in step 8]
+6. Fuel Surcharge = [Fuel Charge noted in 33a]*1.30
+7. Fuel Markup = [Markup noted in step 8]
+8. Rate Entry = [Rate Entry noted in step 11]
+
+i) Ensure a Customer Quote is created and has the following:
+1. The Net Freight Charges have a markup of 30% from the value of [Freight+Fuel charge noted in 40b] - [Fuel charge noted in 40a]
+a. Net Freight Charges = ([Freight+Fuel charge noted in 40b] - [Fuel charge noted in 40a])*1.30
+2. The Fuel Surcharge has no markup and is a calculated amount from Percent of Freight 
+a. Fuel Surcharge = ([Freight+Fuel charge noted in 40b] - [Fuel charge noted in 40a])*(surcharge percent)
+3. The Pricing Notes section renders with two rows as follows:
+a. Net Freight Charges [a hyperlink to the Rate Entry noted in step 11]
+b. Net Freight Charges [a hyperlink to the Markup noted in step 8]
+
+j) Ensure the following fields are populated as follows: 
+1. RateIQ Fuel = [Fuel Charge noted in 40a]
+2. RateIQ Total = [Freight+Fuel charge noted in 40b]
+3. RateIQ Freight = [Freight+Fuel charge noted in 40b] - [Fuel Charge noted in 40a]
+4. Freight Charges = ([Freight+Fuel charge noted in 40b] - [Fuel charge noted in 40a])*1.30
+5. Freight Markup = [Markup noted in step 8]
+6. Fuel Surcharge = [Fuel Surcharge Quantity]*[Fuel Surcharge Unit Price]
+7. Fuel Markup = null
+8. Rate Entry = [Rate Entry noted in step 11]
+Post-Test Case Execution Steps
+1. App Launcher > Search and select Transportation Profiles > Change list view to 'All'
+a. Find and select Boston Beans > Rates tab > Edit Carrier Markup Group > clear the field > Save
+2. TMS Admin Configuration > Global Settings section > RateIQ Rate Entry User > Set to null > Save
+3. TMS Admin > Rate Entries > Find and select the Rate Entry noted in step 11 > Change status to pending > Save
+4. TMS Admin > Carrier Markup Groups > Select RateIQ to enter the record > Edit the name field as follows:
+a. Name = OBSOLETE RateIQ Save 
+
+
+Test - 3393
+Pre-Condition
+Ensure DAT 2 is enabled, if not complete the following steps:
+1. TMS Admin > Credentials:
+a. Authorized User tab > Select User User to open user details
+i. Disable DAT credential
+ii. Enable DAT 2 credential
+iii. Save
+b. Global Services tab > Enable DAT 2 > Save
+Ensure your org has an active customer community
+1. Ensure that the org has a customer community user for Boston Beans
+
+Multi-Currency Additional Instructions
+Test Instructions
+1. TMS Admin Configuration > Global Settings section > RateIQ Rate Entry User > Set to User User > Save
+2. TMS Admin > Modes > Select Truckload to enter the record
+a. Set the Customer Portal Selection Boolean = True > Save
+3. TMS Admin > Carrier Markup groups > New Carrier Markup Group 
+a. Name = RateIQ QW
+b. Save
+4. In the Markup Group Record > Related Tab > Carrier Markups related list > New > Input the following:
+a. Markup Basis = Move 'RateIQ QW' from available to chosen
+b. Markup Type = Freight+Fuel
+c. Mode = Truckload
+d. Target Markup Percent = 30
+e. Minimum Markup Percent = 0
+f. Minimum Markup Amount = 0
+g. Transaction Fee = 0
+h. Save
+5. Note the Markup name for use in expected results c and e
+6. App Launcher > Search and select Transportation Profiles > Change list view to 'All'
+a. Find and select Boston Beans > Rates tab > Edit Carrier Markup Group > Search and select RateIQ QW > Save
+7. TMS Admin > Rate Entry > New Rate Entry > Input the following:
+a. Transportation Profile = Boston Beans
+b. Mode = Truckload
+c. Lane = US to US
+d. Category = Customer
+e. Rate Type = Freight+Fuel
+f. Status = Accepted  
+g. Rate Method = RateIQ+Markup
+h. Save
+8. Note the Rate Entry name for use in expected results a, c, e, and post-test steps
+9. App Launcher > Search and select Accounts > Change list view to 'All Accounts' > Find and select Boston Beans >
+a. Contacts tab > Contacts Related List > Select Joe Boston Beans > Once in the contact record go to the top right dropdown > Log in to Experience as User
+10. Once inside the Customer Portal > Quote Wizard tab > In Quote Wizard LWC > Select Truckload > Input the following:
+a. Equipment Type = Dry Van 53'
+b. 1P stop type = Same as Customer
+i. Expected Date = today
+c. 2D stop type = Account Address
+i. Location = Chicago Cubs
+ii. Expected Date = tomorrow 
+d. Line Item Description = Pieces
+i. Weight = 10000
+e. Select Get Quotes action
+11. In the Quote Selector > Click Select
+12. On the Finalize Load Details page > 2D > Input the following:
+a. First Name = Joe
+b. Last Name = Cub
+c. Phone = 312-999-7777
+d. Email = (your revenova email)
+13. Select Tender action
+14. Once on the load page > Note the Load Number for use in step 18
+15. On the Load record page > Related Tab > Customer Quote related List > Select the Customer Quote name to enter the record
+16. Once in the record > Pricing Summary section
+a. Note the Net Freight Charges for use in expected results b and d
+b. Note the Fuel Surcharge for use in expected results b and d
+c. Note the Transportation Total for use in expected results b and d
+17. Rate Details section > Rate Entry field > a) Check expected result
+18. Return to the TMS > App Launcher > Search and select Loads > Change the Load list view to 'All' > Find and select the load noted in step 14 to enter the record
+19. Once in the Load record > Snapshot tab > RateIQ LWC > Truckload Rate Calculation:
+a. Note the Fuel value for use in expected results c and e
+b. Note the Freight+Fuel value for use in expected results c and e
+20. FQA > Customer Quote Card:
+a. Pricing Summary section > b) Check expected result
+b. Customer Quote Items section > c) Check expected result
+21. Select the Customer Quote name hyperlink to enter the record
+22. Once in the record > Details Tab:
+a. Pricing Summary section > d) Check expected result
+b. Rate Details section > e) Check expected result
+Expected Result
+a) The Rate Entry field is populated (as hyperlink) with the Rate Entry noted in step 8
+
+b) Confirm the following field values:
+1. Net Freight Charges = [value noted in step 16a]
+2. Fuel Surcharge = [value noted in step 16b]
+3. Quote Total = [value noted in step 16c]
+
+c) Ensure a Customer Quote is created and has the following:
+1. The Net Freight Charges have a markup of 30% from the value of [Freight+Fuel charge noted in 19b] - [Fuel charge noted in 19a]
+a. Net Freight Charges = ([Freight+Fuel charge noted in 19b] - [Fuel charge noted in 19a])*1.30
+2. The Fuel Surcharge has a markup of 30% from the Fuel charge value noted in 19a
+a. Fuel Surcharge = [Fuel charge noted in 19a]*1.30
+3. The Pricing Notes section renders with three rows as follows:
+a. Net Freight Charges [a hyperlink to the Rate Entry noted in step 8]
+b. Net Freight Charges [a hyperlink to the Markup noted in step 5]
+c. Fuel Surcharge [a hyperlink to the Markup noted in step 5]
+
+d) Ensure the following fields are populated as follows:
+1. Net Freight Charges = [value noted in step 16a]
+2. Fuel Surcharge = [value noted in step 16b]
+3. Quote Total = [value noted in step 16c]
+
+e) Ensure the following fields are populated as follows: 
+1. RateIQ Fuel = [Fuel Charge noted in 19a]
+2. RateIQ Total = [Freight+Fuel charge noted in 19b]
+3. RateIQ Freight = [Freight+Fuel charge noted in 19b] - [Fuel Charge noted in 19a]
+4. Freight Charges = ([Freight+Fuel charge noted in 19b] - [Fuel charge noted in 19a])*1.30
+5. Freight Markup = [Markup noted in step 5]
+6. Fuel Surcharge = [Fuel Charge noted in 19a]*1.30
+7. Fuel Markup = [Markup noted in step 5]
+8. Rate Entry = [Rate Entry noted in step 8]
+
+Post-Test Case Execution Steps
+1. App Launcher > Search and select Transportation Profiles > Change list view to 'All'
+a. Find and select Boston Beans > Rates tab > Edit Carrier Markup Group > clear the field > Save
+2. App Launcher > Search and select Accounts > Change list view to 'All Accounts' > Find and select Chicago Cubs >
+a. Contacts tab > Contacts Related List > In row for Joe Cub, select the dropdown > Delete > Delete
+3. TMS Admin Configuration > Global Settings section > RateIQ Rate Entry User > Set to User User > Save
+4. TMS Admin > Rate Entries > Find and select the Rate Entry noted in step 11 > Change status to pending > Save
+5. TMS Admin> Carrier Markup Groups > Select FF Cascade Markup to enter the record > Edit the name field as follows:
+a. Name = OBSOLETE RateIQ Save 
+6. TMS Admin > Modes > Select Truckload to enter the record
+a. Set the Customer Portal Selection Boolean = False > Save
+
+Test 2715
+Pre-Condition
+1. Open an extra browser tab with Revenova CRM/PRM (corporate org) > Move back to non-Corporate org tab (leave corporate org tab open)
+2. Log into a test org with a beta installed - *a beta for the current release being tested (credentials for test orgs are in 1Password) > Note the test org name for use in step 7
+3. Once logged into the test org > Setup > Company Information > Note the Salesforce.com Organization Id for use in step 6a
+4. Select View Profile in the top right-hand corner of the webpage (should be a default salesforce profile icon) > Select Settings
+a. On the lefthand side menu > My Personal Information section > Select Grant Account Login Access
+i. In the row for Revenova Support > set Access Duration to 1 month > save
+5. Close the test org tab
+6. In the Revenova CRM/PRM (corporate org) tab > select the App Laucher > search and select Subscribers
+a. In the 'Filter by Organization' bar, enter the Salesforce.com Organization Id noted in step 3
+7. Select the Organization Name hyperlink for the test org name noted in step 2
+a. In the Login Access Granted section > Select the 'Login' hyperlink > In the top right of the browser page select Switch to Lightning Mode
+i. ?The top of the screen should say (adjusted for the test org you are in):
+'Logged in as System Admin SC0 (sc0@revenova.com.partial1) | Sandbox: partial1 | Log out as System Admin SC0' 
+
+1. Home Page > Batch Processes > Ensure ALL batch processes are Not Running or Scheduled
+a. Setup > Scheduled Job > Delete any batch processes scheduled to run
+Multi-Currency Additional Instructions
+Test Instructions
+1. TMS Admin > Credentials:
+a. Authorized User tab > Select User User to open user details
+i. Disable DAT credential
+ii. Enable DAT 2 credential
+1. Set the Preferred Contact Method to Primary Phone
+iii. Save
+b. Global Services tab > Enable DAT 2 > Save
+2. TMS Admin > Configuration > Debugging Section
+a. Logging Enable = True
+b. Logging User = User User
+c. Save > Done
+3. Select RateIQ Calculations hyperlink to go to the list view > Select the DAT2715 hyperlink to enter the record > Once in the record, edit the Active Checkbox field > Set it to TRUE > Save
+4. TMS Admin > Select RateIQ Calculations hyperlink to go to the list view > Select the Truckload Rate Calculation hyperlink to enter the record > Once in the record, edit the Active Checkbox field > Set it to FALSE > Save 
+5. Create a quick entry shipment
+a. Customer = Fargo Wood Chippers
+b. Mode = Truckload
+c. 1P stop type = City/State/Postal Code
+i. Country (needs to be populated first) = US
+ii. City = Chappaqua
+iii. State/Province = New York
+iv. Postal Code = 10514
+v. Expected Date = today
+d. 2D stop type = Account Address
+i. Locations = Boston Beans
+ii. Expected date = 3 days from today
+e. Line Item Description = Mixed
+i. Weight = 11,000
+f. Save
+6. Wait for the Load LRP to render completely > Scroll to the RateIQ LWC > Ensure RateIQ Calculation in the LWC is DAT2715
+7. Load Detail LWC > 2D > Select the Details dropdown > edit the Location field > Clear Boston Beans
+a. Search and select Fargo Wood Chippers > Save
+b. Wait for the stop to update (DO NOT REFRESH BROWSER PAGE)
+8. In the top righthand side of the browser page > Select the Steup gear > Select Developer Console
+a. Ensure the Developer Console opened in a separate window
+9. In the bottom left of the Developer Console > Ensure the 'Logs' tab is select
+a. If not, select the Logs tab
+b. Keep the Console open
+10. In the TMS browser window > RateIQ LWC > Select the refresh action ONCE (the date and time in the bottom right of the LWC will update)
+11. Return to the Developer Console window > In the bottom section of the console there will now be a log record at the top > double-click the row to open the log record
+12. Once the log record renders > Select the 'Debug Only' checkbox > a) Check expected result
+
+Expected Result
+a) Ensure the following mapping:
+1. Origin:
+a. city = Chappaqua
+b. stateOrProvince = NY
+c. postalCode = 10514
+d. country = USA
+2. Destination:
+a. city = Fargo
+b. stateOrProvince = ND
+c. postalCode = 58103
+d. country = USA
+3. rateType = SPOT
+4. equipment = VAN
+5. rateTimePeriod  
+a. rateTense = CURRENT
+Post-Test Case Execution Steps
+1. TMS Admin > Configuration > Debugging Section
+a. Logging Enable = FALSE
+b. save
+2. TMS Admin > Select RateIQ Calculations hyperlink to go to the list view
+a. Select the DAT2715 hyperlink to enter the record > Once in the record, edit the Active Checkbox field > Set it to FALSE > Save
+3. TMS Admin > Select RateIQ Calculations hyperlink to go to the list view
+a. Once in the list view > Select the Truckload Rate Calculation hyperlink to enter the record > Once in the record, edit the Active Checkbox field > Set it to TRUE > Save
+4. TMS Admin > Credentials:
+a. Authorized User tab > Select User User to open user details
+i. Disable DAT 2 credential
+ii. Enable DAT credential > Save
+b. Global Services tab > disable DAT 2 > Save
+
+3245:
+Test Instructions
+1. TMS Admin > Credentials:
+a. Authorized User tab > Select User User to open user details
+i. Disable DAT credential
+ii. Enable DAT 2 credential
+1. Set the Preferred Contact Method to Primary Phone
+iii. Save
+b. Global Services tab > Enable DAT 2 > Save
+2. Create a quick entry shipment
+a. Customer = Fargo Wood Chippers
+b. Mode = Truckload
+c. 1P stop type = Account Address
+i. Location = Chicago Cubs
+ii. Expected Date = today
+d. 2D stop type = Account Address
+i. Locations = Boston Beans
+ii. Expected date = 3 days from today
+e. Line Item Description = Mixed
+i. Weight = 11,000
+f. Save
+3. Go to the RateIQ LWC > Expand the calculation
+a. Ensure DAT values are returned
+4. Set up > Users > select the login action next to Second User
+5. Logged in as Second User > create a quick entry shipment
+a. Customer = Denver Deli Meats
+b. Mode = Truckload
+c. 1P stop type = Same as Customer
+i. Expected Date = today
+d. 2D stop type = Account Address
+i. Locations = Boston Beans
+ii. Expected date = 3 days from today
+e. Line Item Description = Mixed
+i. Weight = 11,000
+f. Save
+6. Go to the RateIQ LWC > Expand the calculation
+a. Ensure DAT values are NOT returned as second user does not have DAT credentials
+7. Log out as Second User
+8. Logged in as User User > create a quick entry shipment
+a. Customer = Boston Beans
+b. Mode = Truckload
+c. 1P stop type = Same as Customer
+i. Expected Date = today
+d. 2D stop type = Account Address
+i. Locations = Chicago Bears
+ii. Expected date = 3 days from today
+e. Line Item Description = Mixed
+i. Weight = 11,000
+f. Save
+9. Go to the RateIQ LWC > Expand the calculation > look at the DAT section > a) check the expected results
+Expected Result
+1. a) Confirm DAT Rates are returned
+a. FYI Only- Second User does not have DAT credentials. We are ensuring that their unauthorization does not impact an authorized users ability to leverage the GetCurrentRatesOp response
+Post-Test Case Execution Steps
+1. TMS Admin > Credentials:
+a. Authorized User tab > Select User User to open user details
+i. Disable DAT 2 credential
+ii. Enable DAT credential > Save
+b. Global Services tab > disable DAT 2 > Save
+
+Test - 3244:
+Test Instructions
+1. TMS Admin > Credentials:
+a. Authorized User tab > Select User User to open user details
+i. Disable DAT credential
+ii. Enable DAT 2 credential
+iii. Set the Preferred Contact Method to Primary Phone
+iv. Save
+b. Global Services tab > Enable DAT 2 > Save
+2. Set up > Users > select the login action next to Second User
+3. Logged in as Second User > create a quick entry shipment
+a. Customer = Denver Deli Meats
+b. Mode = Truckload
+c. 1P stop type = Same as Customer
+i. Expected Date = today
+d. 2D stop type = Account Address
+i. Locations = Boston Beans
+ii. Expected date = 3 days from today
+e. Line Item Description = Mixed
+i. Weight = 11,000
+f. Save
+4. Go to the RateIQ LWC > Expand the calculation >  a) check the expected results
+Expected Result
+1. a) Ensure an error renders stating 'We are having trouble accessing the DAT web service. Please contact your administrator.- Message from Load Board: DAT 2 org or user credentials missing, please contact your salesforce admin.'
+Post-Test Case Execution Steps
+1. TMS Admin > Credentials:
+a. Authorized User tab > Select User User to open user details
+i. Disable DAT 2 credential
+ii. Enable DAT credential
+iii. Save
+b. Global Services tab > disable DAT 2 > Save
+
+Test 3782
+Pre-Condition
+1. Complete the Email Application Pane Setup Steps in the file attached to this test case
+2. The testing for this should be performed in the extension window, NOT the embedded window within Gmail. If you have any issues or questions, please reach out to a QA member.
+Multi-Currency Additional Instructions
+Test Instructions
+1. Setup > My Domain > Note the Current My Domain URL for use in step 5
+2. In the TMS > Accounts > change list view to 'All' > Find and select Email Carrier Two > Contacts tab > Contacts related list > Tom Email Carrier Two record row, select dropdown > Edit > Set email = your personal email > Save
+3. From personal email compose the following email
+a. To = your Revenova email
+b. Subject = Load 
+c. Email Body = Test Load 123
+d. Send
+4. Compose another email with the following:
+a. To = your Revenova email
+b. Subject =Truck Post 
+c. Email Body = test email carrier two truck posting
+d. Send
+5. On the right of your Revenova inbox Select the Salesforce bar (from the extension) > Select Login > Select Use Custom Domain > Input the value noted in step 1 > Continue through to Link Account and select
+a. Note: this should log you into your scratch org automatically. If it does not log you in. Use your scratch org credentials
+6. Once logged in, select the RateIQ tab > Set the following:
+a. 1P stop type = Account Address
+b. Location = Boston Beans
+c. 2P stop type = Account Address
+d. Location = Boston Red Sox
+7. Once set > a) Check expected result
+8. Select the Customer Shipment Tracking tab
+a. In the blank field > Enter A-1268 > Show Tracking > b) Check expected result
+9. Text to Truck Posting tab
+a. In your inbox select the email with subject 'Truck Post' > c) Check expected result
+10. Text to Load tab 
+a. In your inbox select the email with subject 'Load' > d) Check expected result
+11. In top right of Email Pane > Select the '+' dropdown > New Contact > Set:
+a. First Name = Test
+b. Last Name = Ing
+c. Account Name = Boston Beans
+12. Save > e) Check expected result
+Expected Result
+a) Ensure Truckload Rate Calculation renders
+
+b) Ensure the Customer Shipment Tracking LWC renders the load information
+
+c) Confirm the Text to Truck Posting LWC populated as follows:
+1. Carrier Service = Email Carrier Two - Truckload
+2. Contact = Tom Email Carrier Two
+3. Text Field = test email carrier two truck posting
+
+d) Confirm the Text to Load LWC populates as follows:
+1. Customer = null
+2. Contact = null
+3. Text Field = Test Load 123
+
+e) Ensure you received a green success toast confirming contact was created and the Text to Load LWC is now populated as follows:
+1. Customer = Boston Beans
+2. Contact = Test Ing
+3. Text Field = test email carrier two truck posting
+Post-Test Case Execution Steps
+1. In the TMS > Accounts > change list view to 'All' > Find and select Email Carrier Two > Contacts tab > Contacts related list > Tom Email Carrier Two record row, select dropdown > Edit > Set email = your revenova email > Save
+2. In the TMS > Accounts > change list view to 'All' > Find and select Boston Beans > Contacts tab > Contacts related list > Test Ing record row > Select the dropdown > Delete > Delete
+3. Setup > Gmail Integration and Lightning Sync > Open Let user access Salesforce record from Gmail dropdown > Email Application Panes
+a. Select the dropdown > Delete > Delete
+4. In your Email, Log out of the extention
+
+Test 3093
+Pre-Condition
+1. Please run the test case in a new scratch org prior to running any other test case due to caching issues.
+2. Ensure you are in a multi-currency org.
+
+Be aware- you can not run RateIQ- Home Functionality test case in the same org as this test case due to caching of DAT/Freightwaves
+Multi-Currency Additional Instructions
+Test Instructions
+1. Download and Open the appropriate RateIQ Load Script attached to this test case based on your org type.
+a. Setup > Developer Console > Debug drop-down > Open Execute Anonymous Window
+b. Within the Apex code window > Copy and Paste the script values from the attachment associated with this test case (Packaged 3093-RateIQ Loads Script or Non-packaged 3093-RateIQ Loads Script depending on your scratch org) > Select Execute 
+2. Once process is complete and you receive a Status = Success in the Develop Console Logs, close Developer Console
+3. TMS Admin > System > Credentials:
+a. Authorized Users tab > Select User User to open user details:
+i. Set DAT Enabled = False
+ii. Set DAT 2 Enabled = True
+iii. Set Preferred Contact Method = Primary Phone
+b. Save
+c. Global Services tab > Select DAT 2
+i. Set DAT 2 Enabled = True
+d. Save
+4. TMS Admin > System > Configuration
+a. Go to Debugging section
+i. Set Enable Packet Replay = True
+ii. Set Logging User = User User
+b. Save
+5. Download the attached files from this test case to your desktop
+a. Select App Launcher > Search and Select 'Files' > Select 'Upload Files' button
+i. Within your File Upload Dialog Box, Navigate to your desktop > Multi-select and Open the downloaded files:
+1. 'InternetTruckstopGetRateIndexOperation3093'
+2. 'FreightWavesGetCurrentRatesOperation3093'
+3. 'DATRESTGetCurrentRatesOperation3093'
+ii. Select Done
+b. For file 'InternetTruckstopGetRateIndexOperation3093', Select the drop down the carrot on the right side of the record > Edit File Details action > Adjust and save the name to InternetTruckstopGetRateIndexOperation (The name MUST be exactly InternetTruckstopGetRateIndexOperation)
+c. Save
+d. For file 'FreightWavesGetCurrentRatesOperation3093', Select the drop down the carrot on the right side of the record > Edit File Details action > Adjust and save the name to FreightWavesGetCurrentRatesOperation (The name MUST be exactly FreightWavesGetCurrentRatesOperation)
+e. Save
+f. For file 'DATRESTGetCurrentRatesOperation3093', Select the drop down the carrot on the right side of the record > Edit File Details action > Adjust and save the name to DATRESTGetCurrentRatesOperation (The name MUST be exactly DATRESTGetCurrentRatesOperation)
+g. Save
+6. Setup > Search and Select Users > Select User, User > Select Edit
+a. Go to Locale Settings > Set Currency = CAD - Canadian Dollar
+b. Save
+7. App Launcher > Search and Select Transportation > Home > RateIQ tab > a) Check Expected Result
+8. Setup > Search and Select Users > Select User, User > Select Edit
+a. Go to Locale Settings > Set Currency = USD - U.S. Dollar
+b. Save
+9. App Launcher > Search and Select Transportation >Home > RateIQ tab > b) Check Expected Result
+10. Mouse over refresh button > c) Check Expected Result
+11. Go directly below RateIQ header to lane Stop 1P information > d) Check Expected Result
+12. Go directly below Stop 1P to lane Stop 2D information > e) Check Expected Result
+13. Select the refresh button and note time for Expected Result f > f) Check Expected Result 
+14. Go to Stop 1P > Mouse over Account Address Map icon > g) Check Expected Result 
+15. Go to Stop 2P > Select City/State/Postal Code stop type > Mouse over City/State/Postal Code Two Buildings icon > h) Check Expected Result
+16. Set up lane
+a. 1P Stop Type = Account Address
+i. Location = Miami Dolphins > i) Check Expected Result
+b. 2D stop type = City/Stop/Postal Code
+i. Country = US
+ii. City = Input Seattle and Select Seattle, WA 98134 > j) Check Expected Result
+17. Select the X action for 1P Stop - Miami Dolphins > k) Check Expected Result
+18. Select the X action for 2D Stop - Seattle, WA 98134 US > l) Check Expected Result
+19. Set up lane
+a. 1P Stop Type = Account Address
+i. Location = Miami Dolphins
+b. 2D stop type = City/Stop/Postal Code
+i. Country = US
+ii. City = Input Seattle and Select Seattle, WA 98134
+20. Within 2D Stop, Select the X action within the City field > m) Check Expected Result
+21. Within 2D Stop, Select the X action within the Postal Code field > n) Check Expected Result
+22. Note time for Expected Result q
+23. Go to the Truckload Rate Calculation section > o) Check Expected Result
+24. Mouse over the caret for the Truckload Rate Calculation > p) Check Expected Result
+25. Expand the Truckload Rate Calculation by selecting the caret > q) Check Expected Result
+26. Go to the Create Load section > r) Check Expected Result
+27. Set the following under Create Load
+a. Customer = Miami Dolphins
+b. Expected Ship Date = Today's Date
+c. Expected Delivery Date = Seven days from Today's date
+d. Item Description = Mixed
+e. Weight = 13000 > s) Check Expected Result
+f. Weight Units = Adjust from lbs (default) to --None-- > t) Check Expected Result
+g. Set Weight Units = lbs. > u) Check Expected Result
+28. Select the 10% Markup radio button > v) Check Expected Result
+29.  Scroll to the top of the RateIQ LWC > Adjust Mode from Truckload to LTL
+a. Scroll back down to the Create Load section and view the Expected Delivery Date field > w) Check Expected Result
+Expected Result
+a) Confirm a grey bar spanning the entire width of the RateIQ LWC (header)
+1. Ensure a blue and white graph icon renders far left
+2. Ensure the RateIQ logo renders immediately to the right of the blue and white graph icon
+3. Ensure to the far right and in line with the Rate IQ logo, a grey and white refresh button renders
+4. Ensure to the immediate left and in line with the refresh button is a white and grey currency single-selection picklist (select the down caret to view values from top to bottom)
+a. NOTE: The currency value rendered is dependent on your user designated currency
+b. USD 
+c. CAD (Set as default)
+d. MXN 
+e. EUR 
+5. Ensure to the immediate left and in line with the currency field, the following unit rate picklist renders (select the down caret to view values from top to bottom)
+a. per mile (default)
+b. per kilometer
+6. Ensure to the immediate left and in line with the unit rate field is a grey and white equipment type picklist
+a. Select the single-select picklist to ensure the following values render from top to bottom:
+i. --None--
+ii. Van
+iii. Flatbed
+iv. Reefer
+v. Specialized
+vi. Ocean/Intermodal
+7. Ensure to the immediate left and in line with the equipment category picklist is a grey and white mode picklist
+a. Select the single-select picklist to ensure the following values render from top to bottom:
+i. Truckload (default)
+ii. LTL
+iii. Intermodal
+iv. Drayage
+v. Ocean FCL
+vi. Ocean LCL
+vii. Airfreight
+viii. Flatbed
+ix. Bulk
+x. Parcel
+b. 
+b) Confirm the Currency default is USD
+1. 
+c) Confirm the Refresh button renders dark blue
+1.  Ensure pop-up text renders 'Refresh'
+d) Confirm the Stop 1P information renders the following
+1. Blue 1P icon renders far left (white text)
+2. Stop Type renders immediate right of 1P icon as a single select picklist
+3. Select the single select picklist to ensure the following Stop Types render from top to bottom:
+4. City/State/Postal Code (default)
+a. Grey and white Two Buildings icon
+5. Account Address
+a. Grey and white Map icon
+6. With City/State/Postal Code stop type selected, the following render left to right
+a. City lookup field stating 'Country Must Be Selected' (required)
+b. State/Province single select picklist
+i. Upon Selection, ensure the picklist values contain:
+1. District of Columbia
+2. Hunan
+3. Venice
+c. Postal Code look up field (required)
+d. Country single select picklist (required - default based on TMS country configuration option)
+i. Upon Selection, ensure the picklist values contain:
+1. AO
+2. LT
+3. YE
+e. Grey and white X button
+7. Select the Account Address stop type to confirm the following render left to right
+a. Location lookup field (required)
+b. Street Address lookup field (required)
+c. City look up field (required)
+d. State/Province single-select picklist
+i. Upon Selection, ensure the picklist values contain:
+1. Colorado
+2. Macao
+3. Turin
+e. Postal Code lookup field (required)
+f. Country single-select picklist (required-default based on TMS country configuration option)
+i. Upon Selection, ensure the picklist values contain:
+1. AQ
+2. LS
+3. CH
+g. Grey and white X button
+e) Confirm the Stop 2D information renders the following
+1. Blue 1P icon renders far left (white text)
+2. Stop Type renders immediate right of 1P icon as a single select picklist
+3. Select the single select picklist to ensure the following Stop Types render from top to bottom:
+4. City/State/Postal Code (default)
+a. Grey and white Two Buildings icon
+5. Account Address
+a. Grey and white Map icon
+6. With City/State/Postal Code stop type selected, the following render left to right
+a. City lookup field stating 'Country Must Be Selected' (required)
+b. State/Province single select picklist
+i. Upon Selection, ensure the picklist values contain:
+1. Delaware
+2. Dublin
+3. Rome
+c. Postal Code look up field (required)
+d. Country single select picklist (required - default based on TMS country configuration option)
+i. Upon Selection, ensure the picklist values contain:
+1. BS
+2. LU
+3. ZW
+e. Grey and white X button
+7. Select the Account Address stop type to confirm the following render left to right
+a. Location lookup field (required)
+b. Street Address lookup field (required)
+c. City look up field (required)
+d. State/Province single-select picklist
+i. Upon Selection, ensure the picklist values contain:
+1. Illinois
+2. Waterford
+3. Delhi
+e. Postal Code lookup field (required)
+f. Country single-select picklist (required-default based on TMS country configuration option)
+i. Upon Selection, ensure the picklist values contain:
+1. BN
+2. MM
+3. TW
+g. Grey and white X button
+8. 
+f) Confirm Dark blue border renders around refresh button
+1. View the date and time stamp in the bottom right corner of the RateIQ LWC, below the Stop 2D information
+a. 'Updated' Today's Date (format MM/DD/YYYY), Time as noted in Step 13 (format HH:MM:SS AM/PM)
+g) Confirm Map icon renders blue
+1. Confirm pop-up text renders, stating 'Account Address'
+h) Confirm City/State/Postal Code icon renders blue
+1. Confirm pop-up text renders, stating 'City/State/Postal Code'
+i) Confirm once Miami Dolphins is entered, the following fields auto-populate are grey and cannot be edited.
+1. Street Address = 347 Don Shula Drive
+2. City = Miami Gardens
+3. State/Province = Florida
+4. Postal Code = 33056
+5. Country = US
+6. Ensure X button remains actionable
+j) Confirm once Seattle is entered, the following fields auto-populate are can be edited.
+1. City = Seattle
+2. State/Province = Washington
+3. Postal Code = 98134
+4. Ensure X button remains actionable
+5. Ensure the Truckload Rate Calculation section renders consisting of the following from top to bottom
+a. Summary table
+b. Create Load section
+k) Ensure the following fields equal null from left to right
+1. Street Address
+2. City
+3. State/Province
+4. Postal Code
+5. Country
+6. Confirm the Truckload Rate Calculation section is no longer present
+l) Ensure the following fields equal null from left to right
+1. City
+2. State/Province
+3. Postal Code
+4. Country
+m) Confirm City field = Null
+1. 'Country Must Be Select' is rendered in the City field
+2. Red error message renders below field stating 'Complete this field.'
+3. Red border forms around field
+n) Confirm Postal Code field = Null
+1. Red error message renders below field stating 'Complete this field.'
+2. Red border forms around field
+o) Confirm a grey bar extends within the RateIQ LWC
+1. Confirm within the grey bar to the far left, a grey right pointing caret renders
+2. Confirm the 'Truckload Rate Calculation' title renders to the immediate right of the caret (bold text)
+3. Ensure directly below the name header renders four lines from top to bottom and left to right, with each line separated by a grey line.
+4. Column 1
+a. Freight
+b. USD 4,175.00 (bold text)
+c. per mile
+d. USD 1.60 (bold text)
+5. Column 2
+a. Fuel
+b. USD 1,043.33 (bold text)
+c. per mile
+d. USD 0.41 (bold text)
+6. Column 3
+a. Freight+Fuel
+b. USD 5,375.44 (bold text)
+c. per mile
+d. USD 2.36 (bold text)
+7. 
+p) Confirm the caret renders black
+1. Ensure the mouse pointer changes to a finger point
+q) Confirm the caret is downward pointing
+1. Confirm the following the Data Sources render directly below the Truckload Rate Calculation table from top to bottom
+a. Ensure each data source logo/name renders within a gray bar extending within the RateIQ LWC, right aligned.
+2. Revenova TMS
+a. Within the Revenova TMS grey bar
+i. First Row: Average Spot Rate (left aligned, bold)
+ii. Second Row: Last 15 Days, 1 Loads, 5151 Miles (left-aligned)
+b. 3x4 Summary table (below Revenova TMS header)
+i. Column 1
+1. Freight
+2. USD 4,121.00 (bold text)
+3. per mile
+4. USD 0.80 (bold text)
+ii. Column 2
+1. Fuel
+2. USD 1,030.00 (bold text)
+3. per mile
+4. USD 0.20 (bold text)
+iii. Column 3
+1. Freight+Fuel
+2. USD 5,151.00 (bold text)
+3. per mile
+4. USD 1.00 (bold text)
+3. DAT
+a. Within the DAT grey bar
+i. First Row: Average Spot Rate (left aligned, bold)
+ii. Second Row: Last 30 Days, 5 Loads, 5252 Miles, Company Count 2, Lane Miami Mkt to Seattle Mkt (left-aligned, wrapping)
+b. 3x4 Summary table (below DAT header)
+i. Column 1
+1. Freight
+2. USD 4,202.00 (bold text)
+3. per mile
+4. USD 2.00 (bold text)
+ii. Column 2
+1. Fuel
+2. USD 1,050.00 (bold text)
+3. per mile
+4. USD 0.52 (bold text)
+iii. Column 3
+1. Freight+Fuel
+2. USD 5,252.00 (bold text)
+3. per mile
+iv. USD 2.52 (bold text)
+4. FREIGHTWAVES SONAR
+a. Within the FREIGHTWAVES SONAR grey bar
+i. First Row: TRAC Spot Rate (left aligned, bold)
+ii. Second Row: 1515 Loads, 5555 Miles, Confidence 5 (left-aligned)
+b. 3x4 Summary table (below FREIGHTWAVES SONAR header)
+i. Column 1
+1. Freight
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+ii. Column 2
+1. Fuel
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+iii. Column 3
+1. Freight+Fuel
+2. USD 5,555.00 (bold text)
+3. per mile
+4. USD 2.55 (bold text)
+5. truckstop.com
+a. Within the truckstop.com grey bar
+i. First Row: Average Spot Rate Paid (left aligned, bold)
+ii. Second Row: Last 30 Days, 38 Loads, 5454 Miles, (left-aligned)
+b. 3x4 Summary table (below truckstop.com header)
+i. Column 1
+1. Freight
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+ii. Column 2
+1. Fuel
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+iii. Column 3
+1. Freight+Fuel
+2. USD 5,454.00 (bold text)
+3. per mile
+iv. USD 2.54 (bold text)
+6. truckstop.com
+a. Within the truckstop.com grey bar
+i. First Row: Average Spot Rate Posted (left aligned, bold)
+ii. Second Row: Last 7 Days, 84 Loads, 5353 Miles, (left-aligned)
+b. 3x4 Summary table (below truckstop.com header)
+i. Column 1
+1. Freight
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+ii. Column 2
+1. Fuel
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+iii. Column 3
+1. Freight+Fuel
+2. USD 5,353.00 (bold text)
+3. per mile
+iv. USD 2.53 (bold text)
+7. Confirm below the posted truckstop table, the Update date and time render as follows (right aligned):
+a. Updated date (Format: MM/DD/YYYY), time noted in Step 22 (Format: HH:MM:SS AM/PM)
+8. 
+r) Confirm a grey bar extends within the RateIQ LWC directly below the Truckload Rate Calculation summary table (header)
+1. Ensure within the grey bar, 'Create Load' is bold and left aligned
+2. Confirm directly below the Create Load header from top to bottom
+a. 'Freight Charges' = 4332.11 (editable numeric field)
+b. 'Fuel Surcharge' = 1043.33 (editable numeric field)
+3. Confirm to the immediate right of the Freight and Fuel Surcharge fields from top to bottom where the markup values are based on the Freight+Fuel value and not individual Freight and Fuel values.
+a. Freight + Fuel (No Markup) = 5,375.44
+i. Data type = Number (greyed out)
+ii. Radio button = True (default) - rendered to the immediate left of the Freight + Fuel (No Markup) field
+1. Solid blue circle renders within Freight + Fuel (No Markup) radio button
+b. 10% Markup = 5912.98
+i. Data type = Number (greyed out)
+ii. Radio button = False (default) - rendered to the immediate left of the 10% Markup field
+c. 15% Markup = 6181.76
+i. Data type = Number (greyed out)
+ii. Radio button = False (default) - rendered to the immediate left of the 15% Markup field
+d. 20% Markup = 6450.53
+i. Data type = Number (greyed out)
+ii. Radio button = False (default) - rendered to the immediate left of the 20% Markup field
+e. Custom % = Null
+i. Data type = Number (greyed out)
+ii. Custom Markup field rendered to the immediate right of the Custom % field = Null
+1. Data type = Number (greyed out) (auto calculates markup value based on Custom %)
+iii. Ratio button = False (default) - rendered to the immediate left of the 15% Markup field
+4. Confirm thin grey line extends within the RateIQ LWC below the Freight, Fuel Surcharge, and Markup fields
+5. Directly below the thin grey line, left aligned from top to bottom are the following fields:
+a. Customer lookup field (required)
+i. Help Text (mouse over) = 'Company that placed the load/shipment order'
+ii. Grey text within the search field stating ' Search Accounts...'
+b. Item Description text field (required)
+c. Weight text field (required)
+6. Directly below the thin grey line, right aligned and to the immediate right of the Customer, Item Description and Weight fields from top to bottom
+a. Expected Ship Date field (required)
+i. Grey calendar icon within field, right aligned
+ii. Mouse over field stating 'Please fill out this field.'
+b. Expected Delivery Date
+i. Grey calendar icon within field, right aligned
+ii. Mouse over field stating 'Please fill out this field.'
+c. Weight Units single-select picklist
+i. --None -- (If selected, the Create Load is not actionable)
+ii. lbs (default)
+iii. Kg
+7. Directly below the fields, confirm grey 'Create Load' non-actionable button
+8. 
+s) Create load button is blue and actionable upon entering Weight value
+t) Confirm the Create Load action button at the bottom of the Rate IQ LWC is grey and not actionable
+u) Create load button is blue and actionable upon entering Weight value
+v) Confirm the a blue ring encircles radio button
+1. Blue solid circle renders within radio button
+w) Confirm the Expected Delivery Date is NOT a required field
+1. 
+Post-Test Case Execution Steps
+1. Go to Loads > Change from List View to All > Locate Load A-3093 > Using the drop down arrow to the far right, Select Delete > Confirm Delete
+2. Select App Launcher > Search and Select 'Files'
+a. Locate 'InternetTruckstopGetRateIndexOperation' file
+i. Drop down the carrot on the right side of the record > Select Delete action
+b. Locate 'DATRESTGetCurrentRatesOperation' file
+i. Drop down the carrot on the right side of the record > Select Delete action
+c. Locate 'FreightWavesGetCurrentRatesOperation' file
+i. Drop down the carrot on the right side of the record > Select Delete action
+3. TMS Admin > System > Configuration:
+a. Debugging section > Set Enable Packet Replay = false
+b. Save
+4. TMS Admin > System > Credentials:
+a. Global Services tab > Select DAT 2
+i. Set DAT 2 Enabled = False
+ii. Save
+b. Authorized Users tab > Select User User to open user details:
+i. Set DAT Enabled = True
+ii. Set DAT 2 Enabled = False
+iii. Set Preferred Contact Method = Email
+iv. Save
+
+3037
+Pre-Condition
+1. Please run the test case in a new scratch org prior to running any other test case due to caching issues.
+2. Ensure you are in a multi-currency org for this test case.
+
+Be aware- you can not run RateIQ- Home Format test case in the same org as this test case due to caching of DAT/Freightwaves
+Multi-Currency Additional Instructions
+Test Instructions
+1. Download and Open the appropriate RateIQ Load Script attached to this test case based on your org type.
+a. Setup > Developer Console > Debug drop-down > Open Execute Anonymous Window
+b. Within the Apex code window > Copy and Paste the script values from the attachment associated with this test case (Packaged 3037-RateIQ Loads Script or Non-packaged 3037-RateIQ Loads Script depending on your scratch org) > Select Execute 
+2. Once process is complete and you receive a Status = Success in the Develop Console Logs, close Developer Console
+3. TMS Admin > System > Credentials:
+a. Authorized Users tab > Select User User to open user details:
+i. Set DAT Enabled = False
+ii. Set DAT 2 Enabled = True
+iii. Set Preferred Contact Method = Primary Phone
+iv. Save
+b. Global Services tab > Select DAT 2
+i. Set DAT 2 Enabled = True
+ii. Save
+4. TMS Admin > System > Configuration
+a. Go to Debugging section
+i. Set Enable Packet Replay = True
+ii. Set Logging User = User User
+iii. Save
+5. Download the attached files from this test case to your desktop
+a. Select App Launcher > Search and Select 'Files' > Select 'Upload Files' button
+i. Within your File Upload Dialog Box, Navigate to your desktop > Multi-select and Open the downloaded files:
+1. 'InternetTruckstopGetRateIndexOperation3037'
+2. 'FreightWavesGetCurrentRatesOperation3037'
+3. 'DATRESTGetCurrentRatesOperation3037'
+ii. Select Done
+b. For file 'InternetTruckstopGetRateIndexOperation3037', Select the drop down the carrot on the right side of the record > Edit File Details action > Adjust and save the name to InternetTruckstopGetRateIndexOperation (The name MUST be exactly InternetTruckstopGetRateIndexOperation)
+c. Save
+d. For file 'FreightWavesGetCurrentRatesOperation3037', Select the drop down the carrot on the right side of the record > Edit File Details action > Adjust and save the name to FreightWavesGetCurrentRatesOperation (The name MUST be exactly FreightWavesGetCurrentRatesOperation)
+e. Save
+f. For file 'DATRESTGetCurrentRatesOperation3037', Select the drop down the carrot on the right side of the record > Edit File Details action > Adjust and save the name to DATRESTGetCurrentRatesOperation (The name MUST be exactly DATRESTGetCurrentRatesOperation)
+g. Save
+6. Setup > Search and Select Users > Select User, User > Select Edit
+a. Go to Locale Settings > Set Currency = CAD - Canadian Dollar
+b. Save
+7. App Launcher > Search and Select Transportation > Home > RateIQ tab >
+a. Adjust Unit Rate = per kilometer
+b. Mode = Truckload
+c. Equipment Type = Van
+d. Set up lane
+i. 1P Stop Type = Account Address
+1. Location = Miami Dolphins
+ii. 2D stop type = City/Stop/Postal Code
+1. Country = US
+2. City = Input Seattle and Select Seattle, WA 98134
+8. Note time for Expected Result a.4.
+9. Go to the Truckload Rate Calculation section > a) Check Expected Result
+10. TMS Admin > Modes > select the Truckload mode record > General Settings section > adjust the following field:
+a. Default Equipment Category = --none--
+b. Save
+11. Setup > Search and Select Users > Select User, User > Select Edit
+a. Go to Locale Settings > Set Currency = USD - U.S. Dollar
+b. Save
+12. Return to Revenova UI > Do a hard refresh > Rate IQ > b) Check Expected Result
+13. Set up the lane
+a. 1P Stop Type = Account Address
+i. Location = Miami Dolphins
+b. 2D stop type = City/Stop/Postal Code
+i. Country = US
+ii. City = Input Seattle and Select Seattle, WA 98136
+14. Note time for Expected Result c.5.
+15. Go to the Truckload Rate Calculation section > c) Check Expected Result
+16. Go to the Create Load section
+17. Within the Freight Charges field, Adjust the value = 4500 > d) Check Expected Result
+18. Within the Fuel Surcharges field, Adjust the value = 1200 > e) Check Expected Result
+19. Select the radio button for Custom % and input in the Custom % field '1000' > f) Check Expected Result
+20. Set the following under Create Load
+a. Customer = Miami Dolphins
+b. Expected Ship Date = Today's Date
+c. Expected Delivery Date = Seven days from Today's date
+d. Item Description = Mixed
+e. Weight = 13000
+f. Set Weight Units = lbs. (default)
+21. Select the 10% Markup radio button and note the Markup value for Expected Result j
+22. Select Create Load > g) Check Expected Result 
+23. Select Load number hyperlink within Success - Rate IQ banner > h) Check Expected Result 
+24. Close the Success - RateIQ banner
+25. Go to the Load Detail LWC > i) Check Expected Result
+26. Go to FQA > Customer Quote card > j) Check Expected Result
+27. TMS Admin > System > Configuration
+a. Set Enable Packet Replay = false
+b. Save
+28. Home > RateIQ tab > Set up a Lane with the following
+a. 1P Stop Type = Account Address
+i. Location = Joliet Jazz Supplies
+b. 2D stop type = Account Address
+i. Location = Port of Rotterdam > k) Check Expected Result
+29. Go to Create Load > Set the following
+a. Freight Charges = 3000
+b. Fuel Surcharges = 1000
+c. Select 10% Markup radio button
+d. Customer = Joliet Jazz Supplies
+e. Expected Ship Date = Today's Date
+f. Expected Delivery Date = 7 days from Today's Date
+g. Item Description = Mixed
+h. Weight = 13000
+i. Weight Units = lbs (default)
+30. Select Create Load
+31. Select Load number hyperlink within Success - Rate IQ banner > l) Check Expected Result
+Expected Result
+a) Confirm directly below Truckload Rate Calculation header, the Truckload Rate Calculation summary tables renders four lines from top to bottom and left to right, with each line separated by a grey line.
+1. Column 1
+a. Freight
+b. CAD 5,594.50
+c. per kilometer
+d. CAD 3.45
+2. Column 2
+a. Fuel
+b. CAD 1,398.07
+c. per kilometer
+d. CAD 0.89
+3. Column 3
+a. Freight+Fuel
+b. CAD 7,203.10
+c. per kilometer
+d. USD 5.10
+4. View the date and time stamp in the bottom right corner of the RateIQ LWC, below the Truckload Rate Calculation summary table
+a. 'Updated' Today's Date (format MM/DD/YYYY), Time as noted in Step 8 (format HH:MM:SS AM/PM)
+5. 
+b) Confirm the Equipment Category picklist displays 'Select an Option'
+
+c) Confirm directly below Truckload Rate Calculation header, the Truckload Rate Calculation summary tables renders the following:
+1. Column 1
+a. Freight
+b. USD 4,175.00
+c. per mile
+d. USD 1.60
+2. Column 2
+a. Fuel
+b. USD 1,043.33
+c. per mile
+d. USD 0.41
+3. Column 3
+a. Freight+Fuel
+b. USD 5,375.44
+c. per mile
+d. USD 2.36 (bold text)
+4. No exchange rate renders below the the Truckload Rate Calculation summary table in the bottom left corner
+5. View the date and time stamp in the bottom right corner, below the Truckload Rate Calculation summary table
+a. 'Updated' Today's Date (format MM/DD/YYYY), Time as noted in Step 14 (format HH:MM:SS AM/PM)
+d) Confirm the following values render
+1. Freight + Fuel (No Markup) = 5543.33
+2. 10% Markup = 6097.66
+3. 15% Markup = 6374.83
+4. 20% Markup = 6652.00
+e) Confirm the following values render
+1. Note: when editing the Fuel Surcharge field, the value will render to 13 decimal places only while editing
+2. Freight + Fuel (No Markup) = 5700.00
+3. 10% Markup = 6270.00
+4. 15% Markup = 6555.00
+5. 20% Markup = 6840.00
+f) Confirm the Custom Markup value = 62700.00
+
+g) Confirm green RateIQ success banner renders stating 'Load "Load Number"(hyperlink) was created.'
+1. 
+2. Note the load number for Expected Result g) and Post Test Case Execution Step 1.b.
+h) Confirm you are re-directed to the load as noted in Expected Result f.2.
+i) Confirm Stop 1P = Miami Dolphins
+1. Ensure the Expected Pickup date = Today's Date
+2. Ensure Details = 347 Don Shula Drive, Miami Gardens, Florida 33056
+a. Joe Miami Dolphins (right aligned, black, bold) 312-888-7777 (blue, bold, hyperlink)
+3. Ensure Items = Total Weight: 13000 lbs
+4. Confirm Stop 2D = Stop 2
+a. Ensure the Expected Delivery date = Seven days after Today's date
+b. Ensure Details = Seattle, WA 98136
+c. Ensure Items = Total Weight: 13000 lbs
+j) Confirm Status = Quoted
+1. Confirm within the Customer Quote card Pricing Summary the Quote Total value rendered = value noted in Step 21 (Note: Markup value is based on the Freight+ Fuel value and not individual Freight and Fuel values)
+k) Confirm the Truckload Rate Calculation values = null (No matching rate calculations were found)
+1. 
+l) Confirm you are re-directed to the load
+Post-Test Case Execution Steps
+1. Go to Loads > Change from List View to All > Locate Load A-3037 > Using the drop down arrow to the far right, Select Delete > Confirm Delete
+2. Select App Launcher > Search and Select 'Files'
+a. Locate 'InternetTruckstopGetRateIndexOperation' file
+i. Drop down the carrot on the right side of the record > Select Delete action
+b. Locate 'DATRESTGetCurrentRatesOperation' file
+i. Drop down the carrot on the right side of the record > Select Delete action
+c. Locate 'FreightWavesGetCurrentRatesOperation' file
+i. Drop down the carrot on the right side of the record > Select Delete action
+3. TMS Admin > System > Credentials:
+a. Global Services tab > Select DAT 2
+i. Set DAT 2 Enabled = False
+ii. Save
+b. Authorized Users tab > Select User User to open user details:
+i. Set DAT Enabled = True
+ii. Set DAT 2 Enabled = False
+iii. Set Preferred Contact Method = Email
+iv. Save
+4. TMS Admin > Modes > select the Truckload mode record > General Settings section > adjust the following field:
+a. Default Equipment Category = Van
+b. Save
+
+Test 3026
+Pre-Condition
+1. Please run the test case in a new scratch org prior to running any other test case due to caching issues.
+2. Ensure you are in a multi-currency org.
+
+Be aware- you can not run RateIQ- Home Functionality or RateIQ - Home Format test cases in the same org as this test case due to caching of DAT/Freightwaves
+Multi-Currency Additional Instructions
+Test Instructions
+1. Download and Open the appropriate RateIQ Load Script attached to this test case based on your org type.
+2. Setup > Developer Console > Debug drop-down > Open Execute Anonymous Window
+a. Within the Apex code window > Copy and Paste the script values from the attachment associated with this test case (Packaged 3026-RateIQ Loads Script or Non-packaged 3026-RateIQ Loads Script depending on your scratch org) > Select Execute 
+3. Once process is complete and you receive a Status = Success in the Develop Console Logs, close Developer Console
+4. TMS Admin > System > Credentials:
+a. Authorized Users tab > Select User User to open user details:
+i. Set DAT Enabled = False
+ii. Set DAT 2 Enabled = True
+iii. Set Preferred Contact Method = Primary Phone
+iv. Save
+b. Global Services tab > Select DAT 2
+i. Set DAT 2 Enabled = True
+ii. Save
+5. TMS Admin > System > Configuration
+a. Go to Debugging
+i. Set Enable Packet Replay = True
+ii. Set Logging User = User User
+iii. Save
+6. Download the attached files from this test case to your desktop
+7. Select App Launcher > Search and Select 'Files' > Select 'Upload Files' button
+a. Within your File Upload Dialog Box, Navigate to your desktop > Multi-select and Open the downloaded files:
+i. 'InternetTruckstopGetRateIndexOperation3026'
+ii. 'FreightWavesGetCurrentRatesOperation3026'
+iii. 'DATRESTGetCurrentRatesOperation3026'
+b. Select Done
+c. For file 'InternetTruckstopGetRateIndexOperation3026', Select the drop down the carrot on the right side of the record > Edit File Details action > Adjust and save the name to InternetTruckstopGetRateIndexOperation (The name MUST be exactly InternetTruckstopGetRateIndexOperation)
+d. Save
+e. For file 'FreightWavesGetCurrentRatesOperation3026', Select the drop down the carrot on the right side of the record > Edit File Details action > Adjust and save the name to FreightWavesGetCurrentRatesOperation (The name MUST be exactly FreightWavesGetCurrentRatesOperation)
+f. Save
+g. For file 'DATRESTGetCurrentRatesOperation3026', Select the drop down the carrot on the right side of the record > Edit File Details action > Adjust and save the name to DATRESTGetCurrentRatesOperation (The name MUST be exactly DATRESTGetCurrentRatesOperation)
+h. Save
+8. Create a quick entry truckload shipment
+a. Customer = Chicago Pizza
+b. Mode = Truckload
+c. Equipment Type = Dry Van 53'
+d. 1P stop type = Account Address
+i. Location = Miami Dolphins
+ii. Expected Date = Today
+e. 2D stop type = City/Stop/Postal Code
+i. Country = US
+ii. City = Input Seattle and Select Seattle, WA 98134
+iii. Expected Date = 7 days after today's date
+f. Line item description = Mixed
+i. Weight = 13000
+g. Save your load and note the Load number for Post Test Execution Step 1a
+9. Scroll Down to RateIQ LWC
+10. View the top (header) of the RateIQ LWC > a) Check Expected Result
+11. Go directly below the RateIQ header to the Truckload Rate Calculation section > b) Check Expected Result
+12. Mouse over the caret for the Truckload Rate Calculation > c) Check Expected Result
+13. Select the Rate IQ LWC refresh button and note the time (HH:MM AM/PM) for Expected Result d+e > d) Check Expected Result
+14. Expand the Truckload Rate Calculation by selecting the caret > e) Check Expected Result
+15. Set RateIQ rate = per kilometer > f) Check Expected Result
+16. If you are in a multi-currency org, continue with Steps 17-20, Otherwise, skip to Step 21
+17. Set RateIQ Currency = CAD > g) Check Expected Result
+18. Set RateIQ Currency = MXN > h) Check Expected Result
+19. Set RateIQ Currency = EUR > i) Check Expected Result
+20. Set RateIQ Currency = USD > j) Check Expected Result
+21. Set RateIQ rate = per mile > k) Check Expected Result
+22. Create a quick entry truckload shipment
+a. Customer = Chicago Pizza
+b. Mode = Truckload
+c. Equipment Type = null
+d. 1P stop type = Same as Customer
+i. Expected Date = Today
+e. 2D stop type = Account Address
+i. Location = Boston Beans
+ii. Expected Date = 3 days after today's date
+f. Line item description = Bananas
+i. Weight = 15000
+g. Save your load and note the load number for Post Test Execution Step 1b
+23. TMS Admin > Modes > Truckload mode record > Set Default Equipment Category = Reefer > Save
+24. Go to the new Load's Rate IQ LWC > l) Check Expected Result
+25. TMS Admin > Modes > Truckload mode record > Clear Default Equipment Category back to blank > Save
+26. Return to the new Load's Rate IQ LWC > select the Refresh action > m) Check Expected Result
+Expected Result
+a) Confirm a grey bar spanning the entire width of the RateIQ LWC (header)
+1. Ensure a blue and white graph icon renders far left
+2. Ensure the RateIQ text logo renders immediately to the right of the blue and white graph icon
+3. Ensure to the far right and in line with the Rate IQ logo a grey and white refresh button renders
+4. Ensure to the immediate left and in line with the refresh button is a white and grey equipment category single-selection picklist (select the down caret to view values)
+a. --None--
+b. Van
+c. Flatbed
+d. Reefer
+e. Specialized
+f. Ocean/Intermodal
+5. If you have a single currency org, skip to Expected Result a.7., otherwise continue to Expected Result a.6.
+6. Ensure to the immediate left and in line with the equipment category picklist is a white and grey currency single-selection picklist (select the down caret to view values)
+a. USD (default)
+b. CAD (value will only render if your org is multi currency)
+c. MXN (value will only render if your org is multi currency)
+d. EUR (value will only render if your org is multi currency)
+7. Ensure to the immediate left and in line with the currency field, the following picklist renders (select the down caret to view values)
+a. per mile (default)
+b. per kilometer
+8. Confirm the Equipment Category field's currently selected value is Van
+b) Confirm a grey bar extends within the RateIQ LWC and directly below the RateIQ header
+1. Ensure a right pointing caret renders to the far left within the grey bar
+2. Ensure 'Truckload Rate Calculation' renders to the immediate right of the caret in bold font
+3. Ensure directly below the Truckload Rate Calculation header renders a 3x4 summary table from top to bottom, left to right with each line separated by a grey line.
+a. Column 1
+i. Freight
+ii. USD 4,175.00 (bold text)
+iii. per mile
+iv. USD 1.60 (bold text)
+b. Column 2
+i. Fuel
+ii. USD 1,043.33 (bold text)
+iii. per mile
+iv. USD 0.41 (bold text)
+c. Column 3
+i. Freight+Fuel
+ii. USD 5,375.44 (bold text)
+iii. per mile
+iv. USD 2.36 (bold text)
+c) Confirm the caret renders black
+1. Ensure the mouse pointer changes to a finger point
+d) Confirm below the Truckload Rate Calculation summary table, the Update date and time render as follows (right aligned):
+1. 'Updated' Today's date (Format: MM/DD/YYYY), time noted in Step 13 (Format: HH:MM:SS AM/PM)
+e) Confirm the caret is downward pointing
+1. Confirm the following the Data Sources render directly below the Truckload Rate Calculation summary table from top to bottom
+a. Ensure each data source logo/name renders within a gray bar extending within the RateIQ LWC, right aligned.
+2. Revenova TMS
+a. Within the Revenova TMS grey bar
+i. First Row: Average Spot Rate (left aligned, bold)
+ii. Second Row: Last 15 Days, 1 Loads, 5151 Miles (left-aligned)
+b. 3x4 Summary table (below Revenova TMS header)
+i. Column 1
+1. Freight
+2. USD 4,121.00 (bold text)
+3. per mile
+4. USD 0.80 (bold text)
+ii. Column 2
+1. Fuel
+2. USD 1,030.00 (bold text)
+3. per mile
+4. USD 0.20 (bold text)
+iii. Column 3
+1. Freight+Fuel
+2. USD 5,151.00 (bold text)
+3. per mile
+4. USD 1.00 (bold text)
+3. DAT
+a. Within the DAT grey bar
+i. First Row: Average Spot Rate (left aligned, bold)
+ii. Second Row: Last 30 Days, 5 Loads, 5252 Miles, Company Count 2, Lane Miami Mkt to Seattle Mkt (left-aligned, wrapping)
+b. 3x4 Summary table (below DAT header)
+i. Column 1
+1. Freight
+2. USD 4,202.00 (bold text)
+3. per mile
+4. USD 2.00 (bold text)
+ii. Column 2
+1. Fuel
+2. USD 1,050.00 (bold text)
+3. per mile
+4. USD 0.52 (bold text)
+iii. Column 3
+1. Freight+Fuel
+2. USD 5,252.00 (bold text)
+3. per mile
+4. USD 2.52 (bold text)
+4. FREIGHTWAVES SONAR
+a. Within the FREIGHTWAVES SONAR grey bar
+b. First Row: TRAC Spot Rate (left aligned, bold)
+i. Second Row: 1515 Loads, 5151 Miles, Confidence 5 (left-aligned)
+c. 3x4 Summary table (below FREIGHTWAVES SONAR header)
+i. Column 1
+1. Freight
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+ii. Column 2
+1. Fuel
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+5. Column 3
+iii. Freight+Fuel
+1. USD 5,555.00 (bold text)
+2. per mile
+3. USD 2.55 (bold text)
+5. truckstop.com
+a. Within the truckstop.com grey bar
+i. First Row: Average Spot Rate Paid (left aligned, bold)
+ii. Second Row: Last 30 Days, 38 Loads, 5454 Miles, (left-aligned)
+b. 3x4 Summary table (below truckstop.com header)
+i. Column 1
+1. Freight
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+ii. Column 2
+1. Fuel
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+iii. Column 3
+1. Freight+Fuel
+2. USD 5,454.00 (bold text)
+3. per mile
+4. USD 2.54 (bold text)
+6. truckstop.com
+a. Within the truckstop.com grey bar
+i. First Row: Average Spot Rate Posted (left aligned, bold)
+ii. Second Row: Last 7 Days, 84 Loads, 5353 Miles, (left-aligned)
+b. 3x4 Summary table (below truckstop.com header)
+i. Column 1
+1. Freight
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+ii. Column 2
+1. Fuel
+2. USD (bold text)
+3. per mile
+4. USD (bold text)
+iii. Column 3
+1. Freight+Fuel
+2. USD 5,353.00 (bold text)
+3. per mile
+4. USD 2.53 (bold text)
+7. Confirm below the posted truckstop table, the Update date and time render as follows (right aligned):
+a. Updated date (Format: MM/DD/YYYY), time noted in Step 13 (Format: HH:MM:SS AM/PM)
+f) Confirm the rate for the Truckload Rate Calculation Summary and data sources listed is updated to 'per kilometer'
+1. Ensure for Truckload Rate Calculation Summary, the following values under 'per kilometer' are updated from left to right
+a. USD 2.57
+b. USD 0.67
+c. USD 3.81
+2. Ensure for Revenova TMS data source, the following values under 'per kilometer' are updated from left to right
+a. USD 1.29
+b. USD 0.32
+c. USD 1.61
+3. Ensure for DAT data source, the following values under 'per kilometer' are updated from left to right
+a. USD 3.22
+b. USD 0.84
+c. USD 4.06
+4. 
+g) Confirm the Exchange Rate field renders in the bottom left corner of the RateIQ LWC: (FYI Only- It compares your selected rate with the last rate viewed)
+1. 'Exchange Rate: 1.34 CAD/1 USD'
+2. 
+3. Ensure the Truckload Rate Calculation Summary and Data Sources are updated to CAD currency
+a. Ensure the Truckload Rate Calculation Summary table renders the following values from left to right
+i. Freight = CAD 5,594.50
+ii. Fuel = CAD 1,398.07
+iii. Freight+Fuel = CAD 7,203.10
+h) Confirm the Exchange Rate field renders in the bottom left corner of the RateIQ LWC: (FYI Only- It compares your selected rate with the last rate viewed)
+1. 'Exchange Rate: 14.0149253731 MXN/1 CAD'
+2. 
+3. Ensure the DAT data source renders the following values from left to right
+a. Freight = MXN 78,913.56
+b. Fuel = MXN 19,719.00
+c. Freight+Fuel = MXN 98,632.56
+i) Confirm the Exchange Rate field renders in the bottom left corner of the RateIQ LWC: (FYI Only- It compares your selected rate with the last rate viewed)
+1. 'Exchange Rate: 0.0489882854 EUR/1 MXN'
+2. 
+3. Ensure the Freightwaves Sonar data source renders the following values from left to right
+a. Freight+Fuel = EUR 5,110.60
+b. Freight+Fuel per mile = EUR 3.78
+j) Confirm the Exchange Rate field renders in the bottom left corner of the RateIQ LWC: (FYI Only- It compares your selected rate with the last rate viewed)
+1. 'Exchange Rate: 1.0869565217 USD/1 EUR'
+2. 
+3. Ensure the truckstop-Posted data source renders the following values from left to right
+a. Freight+Fuel = USD 5,353.00
+b. Freight+Fuel per mile = USD 4.07
+k) Confirm the rate for the Truckload Rate Calculation Summary and data sources listed is updated to updated to 'per mile'
+1. Ensure for Truckload Rate Calculation Summary, the following values under 'per mile' are updated from left to right
+a. USD 1.60
+b. USD 0.41
+c. USD 2.36
+2. Ensure for Revenova TMS data source, the following values under 'per mile' are updated from left to right
+a. USD 0.80
+b. USD 0.20
+c. USD 1.00
+3. Ensure for DAT data source, the following values under 'per mile' are updated from left to right
+a. USD 2.00
+b. USD 0.52
+c. USD 2.52
+l) Confirm the Equipment Category field in the RateIQ LWC header renders Reefer
+m) Confirm the Equipment Category field in the RateIQ LWC header renders blank
+Post-Test Case Execution Steps
+1. Go to Loads > List view > Select All >
+a. Select Load A-3026
+i. Using the drop down picklist to the far right for Load A-3026, Select Delete
+ii. Confirm Delete
+b. Select the load number noted in Step 22
+i. Using the drop down picklist to the far right for the load number noted in Step 22 > Select Delete
+ii. Confirm Delete
+2. Select App Launcher > Search and Select 'Files'
+a. Locate 'InternetTruckstopGetRateIndexOperation' file
+i. Drop down the carrot on the right side of the record > Select Delete action
+b. Locate 'DATRESTGetCurrentRatesOperation' file
+i. Drop down the carrot on the right side of the record > Select Delete action
+c. Locate 'FreightWavesGetCurrentRatesOperation' file
+i. Drop down the carrot on the right side of the record > Select Delete action
+3. TMS Admin > System > Configuration
+a. Go to Debugging
+i. Set Enable Packet Replay = False
+ii. Set Logging User = Null
+iii. Save
+4. TMS Admin > System > Credentials:
+a. Global Services tab > Select DAT 2
+i. Set DAT 2 Enabled = False
+ii. Save
+b. Authorized Users tab > Select User User to open user details:
+i. Set DAT Enabled = True
+ii. Set DAT 2 Enabled = False
+iii. Set Preferred Contact Method = Email
+iv. Save
+5. TMS Admin > Modes > Truckload record > adjust the following:
+a. Default Equipment Category = Van
+b. Save
+
+Test 1327
+Test Instructions
+1. TMS Admin > RateIQ Calculations > Edit Truckload Rate Calculation
+a. Details tab > General Information > Make the following adjustments:
+i. Set Lane = IL US to MA US
+ii. Save
+b. 
+2. Create a quick entry truckload shipment: 
+a. Customer = Boston Beans
+b. Mode = Truckload
+c. Equipment Type = Dry Van 53'
+d. 1P = Same as Customer
+i. Expected Date = Today
+e. 2D = Location type stop of Chicago Pizza
+i. Expected Date = 3 days from today
+f. Line item description = Bananas
+i. Weight = 15000
+g. Save your load
+3. Go to the Load RateIQ LWC > a) Check Expected Result
+
+Expected Result
+a) Ensure no RateIQ data renders
+1. 'No matching rate calculation' renders within the Load RateIQ LWC
+
+Post-Test Case Execution Steps
+1. TMS Admin > RateIQ Calculations
+a. Set Lane = Null
+b. Save
+
+Test 1836
+Pre-Condition
+1. Ensure you have completed the LaneIQ Network steps within the Scratch Org Set Up Instructions Confluence page
+a. Be aware the LIN restarts every morning. If you have not added your org into the Network today, you must do so
+Multi-Currency Additional Instructions
+Test Instructions
+1. Download the attached file, 'RateCalculationRuleUploadFile_1836', to this test case
+a. Open file
+b. Remove the first top three rows and change the Ship Date for each row to Today's date
+i. ?Dates in the file must be in YYYY-MM-DD format
+c. Save as 'RateCalculationRuleUploadFile' (name must be exactly RateCalculationRuleUploadFile) to your desktop
+i. Format must be saved as CSV
+2. TMS Admin > System > RateIQ Calculations > Select Truckload Rate Calculation > Scroll down to the Rate Calculation Rules LWC
+a. ?Click on the 'Data' action > Upload the 'RateCalculationRuleUploadFile' file to the new Rate IQ Calculation record > 
+b. Confirm a green Success - Rate Calculation banner renders stating 'You will receive an email when this process completes.'
+i. 
+3. TMS Admin > System > RateIQ Calculations > Select Truckload Rate Calculation > Scroll down to Rate Calculation Rules > Make the following adjustments:
+a. Set Freightwaves Weight = 10
+b. Select 'Add' action and set the following:
+i. Data Source = Custom Source
+ii. Equipment Category = Van
+iii. Lookback Days = 30
+iv. Search Radius = 100
+v. Threshold = 1
+vi. Weight = 10
+4. Save
+5. Download and Open the appropriate RateIQ Load Script attached to this test case based on your org type.
+6. Setup > Developer Console > Debug drop-down > Open Execute Anonymous Window
+a. Within the Apex code window > Copy and Paste the script values from the attachment associated with this test case (Packaged 1836-RateIQ Loads Script or Non-packaged 1836-RateIQ Loads Script depending on your scratch org) > Select Execute 
+7. Go to Loads > List view > Select All > Select Load A-1836
+8. Once in Load A-1836 > Select Clone
+a. Select Create
+b. Once a green success banner stating 'The clone operation completed successfully.' renders, Go to the Loads section and select the new load hyperlink
+9. Go to the RateIQ LWC > Expand the Truckload Rate Calculation section > a) Check Expected Result
+10. Within the RateIQ LWC view the Truckload Rate Calculation Summary values
+a. Note the Freight value for use in Expected Result c.1.e.
+b. Note the Fuel value for use in Expected Result c.2.e.
+c. Note the Freight+Fuel value for use in Expected Result b.4.
+d. Note the Freight + Fuel per mile value in Expected Result b.5.
+e. 
+11. If all data sources: Revenova TMS, LaneIQ Network, DAT, Freightwaves Sonar, truckstop-Paid, truckstop-Posted and Customer Source are returned, View each of the Data Source Freight+Fuel and Freight+Fuel per mile values > b) Check Expected Result
+12. If all data sources are not returned, you need to adjust the math accordingly. For the individual Freight and Fuel Summary values, Freightwaves, Truckstop (Paid), and Truckstop (Posted) do not return values, likewise for their corresponding per mile values. > c) Check Expected Result
+Expected Result
+a) Ensure that LaneIQ data source renders below Revenova TMS and above DAT data sources
+
+1. Ensure the Custom Source renders below the truckstop-Posted data source
+
+b) Confirm the Data Source RateIQ values are accurate based on this example math and using the weights as a percentage for each Data Source from the Truckload Rate Calculation record
+1. Because all Data Source Freight+Fuel values are returned in the RateIQ LWC, the Data Source noted weights are applied. No adjustments need to be made.
+2. 
+3. Formula: Data Source Freight+Fuel value * weighted percentage = Adjusted Freight+Fuel Value
+a. TMS (10/100): 2,900.00 * 0.10 = 290
+b. Lane IQ Network (10/100): 2,358.33 * 0.10 = 235.833
+c. DAT (20/100): 2,482.39 * 0.20 = 496.478
+d. Freightwaves (10/100): 13,289.58 * 0.10 = 1,328.958
+e. Truckstop-Paid (20/100): 2,472.22 * 0.20 = 494.444
+f. Truckstop-Posted (20/100): 2,541.49 * 0.20 = 508.298
+g. Custom Source (10/100): 1,140.00 * 0.10 = 114
+h. Sum of adjusted values a thru f = 2,159.54
+4. It can be confirmed that the Freight+Fuel values returned in the RateIQ LWC are accurate because the sum of the adjusted values a-f equals the Truckload Rate Calculation Summary as noted in Step10c.
+5. For the Freight+Fuel per mile values, it can be determined using the same math to equal the value noted in Step 10d
+a. TMS (10/100): 0.56 * 0.10 = 0.056
+b. Lane IQ Network (10/100): 2.37 * 0.10 = 0.237
+c. DAT (20/100): 2.51 * 0.20 = 0.502
+d. Freightwaves (10/100): 2.58 * 0.10 = 0.258
+e. Truckstop-Paid (20/100): 2.61 * 0.20 = 0.522
+f. Truckstop-Posted (20/100)): 2.51 * 0.20 = 0.502
+g. Custom Source (10/100): 1.11 * 0.10 = 0.111
+h. Sum of adjusted values a thru f = 2.19
+c) Because Freightwaves (10% weight), Truckstop-Paid (20% weight), and Truckstop-Posted (20% weight) data sources do not return an individual Freight nor Fuel value, the weights of the remaining data sources need to be adjusted accordingly because the sum of the data source weights need to equal 100%. The combined contribution of these data sources not returning an individual Freight nor Fuel value is weighted at 50%, the remaining weights are adjusted to either 10/50 (20%) or 20/50 (40%) depending on the original data source weight.
+1. For the Freight Summary, the math as follows:
+a. TMS (10/50): 2,100.00 * 0.20 = 420
+b. Lane IQ Network (10/50): 2,358.33 * 0.20= 471.666
+c. DAT (20/50): 2,076.90 * 0.40 = 830.76
+d. Custom Source (20/50): 1,036.67 * 0.20 = 207.334
+e. Sum of adjusted values i thru iv = 1,929.76 - which equals the value noted in Step 10a
+2. For the Fuel Summary, the math as follows:
+a. TMS (10/50): 800.00 * 0.20 = 160
+b. Lane IQ Network (10/50): 0.00 * 0.20= 0.00
+c. DAT (20/50): 405.49 * 0.40 = 162.196
+d. Custom Source (20/50): 106.67 * 0.20 = 21.334
+e. Sum of adjusted values i thru iv = 343.53 - which equals the value noted in Step 10b
+Post-Test Case Execution Steps
+1. TMS Admin > System > RateIQ Calculations > Select Truckload Rate Calculation > Scroll down to Rate Calculation Rules > Make the following adjustments:
+a. Set Freightwaves Weight = 20
+b. For Custom Source, Select the blue X action
+2. Save
+3. Go to Loads > List view > Select All > Locate Load A-1836
+a. Using the drop down picklist to the far right for Load A-1836, Select Delete
+b. Confirm Delete
+
+Test 2252
+Test Instructions
+1. Create a Detailed Entry Shipment:
+a. Customer = Chicago Pizza
+b. Mode = Truckload
+c. Equipment Type = Dry Van 48'
+d. 1P = Same as Customer
+i. Expected Date = Today
+e. 2D = Los Angeles Lightning
+i. Expected date = Today
+f. + action under 2D > Select the add pickup action
+g. 3P = Los Angeles Lightning
+i. Expected Date = tomorrow
+h. + action under 3D > Select the add delivery action
+i. Input 4D as = Same as Customer
+i. Expected date = 3 Days from today
+j. 1P > 2D Line item description = Bananas
+i. Weight = 15000
+k. + new line item action
+l. 3P > 4D Line item description = Grapes
+i. Weight = 1200
+m. Save
+2. Once in the load record > go to Rate IQ LWC > a) check the expected results
+Expected Result
+1. a) Ensure no RateIQ data renders (This includes internal data, DAT, FreightWaves Sonar, Truckstop, and LaneIQ Network)
+a. Confirm a message renders as 'Carrier spot rates are not available for round trip loads'  
+
+Test 3957
+Test Instructions
+1. TMS Admin > Modes > Truckload mode record > set Default Equipment Category = Reefer > Save
+2. TMS Admin > System > RateIQ Calculations > select the Truckload Rate Calculation record > adjust Active to False > Save
+3. TMS Admin > System > RateIQ Calculations > select the US Country TL Rate Calc 976 record > adjust Active to False > Save
+4. TMS Admin > System > RateIQ Calculations > select the IL-MA State TL Rate Calc 976 record > adjust Active to False > Save
+5. TMS Admin > System > RateIQ Calculations > select the Chicago-Boston TL Rate Calc 976 record > adjust Active to False > Save
+6. TMS Admin > System > RateIQ Calculations > select the Chicago Pizza to Boston Beans TL Rate Calc 976 record > adjust Active to False > Save
+7. TMS Admin > System > RateIQ Calculations > select New > input the following:
+a. Name = RC1
+b. Mode = Truckload
+c. Lane = Chicago IL to Boston MA
+d. Equipment Category = Van
+e. Active = True
+f. Save
+8. TMS Admin > System > RateIQ Calculations > select New > input the following:
+a. Name = RC2
+b. Mode = Truckload
+c. Lane = null
+d. Equipment Category = Van
+e. Active = True
+f. Save
+9. TMS Admin > System > RateIQ Calculations > select New > input the following:
+a. Name = RC3
+b. Mode = Truckload
+c. Lane = Chicago IL to Boston MA
+d. Equipment Category = null
+e. Save > a) Check the expected result
+10. Still within RC3 > adjust Active to True > Save
+11. TMS Admin > System > RateIQ Calculations > select New > input the following:
+a. Name = RC4
+b. Mode = Truckload
+c. Lane = null
+d. Equipment Category = null
+e. Active = true
+f. Save
+12. TMS Admin > System > RateIQ Calculations > select New > input the following:
+a. Name = RC5
+b. Mode = Truckload
+c. Lane = Chicago IL to Boston MA
+d. Equipment Category = Reefer
+e. Active = True
+f. Save
+13. TMS Admin > System > RateIQ Calculations > select New > input the following:
+a. Name = RC6
+b. Mode = Truckload
+c. Lane = null
+d. Equipment Category = Reefer
+e. Active = True
+f. Save
+14. Create a quick entry truckload shipment:
+a. Customer = Chicago Pizza
+b. Mode = Truckload
+c. Equipment Type = Dry Van 53'
+d. 1P Stop Type = Same as Customer
+i. Expected Date = today's date
+e. 2D Stop Type = Account Address
+i. Location = Boston Beans
+ii. Expected Date = 3 days from today's date
+f. Line Item Description = Bananas
+i. Weight = 15000
+g. Save
+h. note the load name for use in Steps 17, 19, 21, and 23
+15. Go to the Rate IQ LWC > b) Check the expected result
+16.  TMS Admin > RateIQ Calculations > RC-1 > Set Active = False > Save.
+17. Return to the Rate IQ LWC for the load referenced in Step 14(h) > c) Check Expected Result
+18. TMS Admin > RateIQ Calculations > RC-2 > Set Active = False > Save.
+19. Return to the Rate IQ LWC for the load referenced in Step 14(h) > d) Check Expected Result
+20. TMS Admin > RateIQ Calculations > RC-3 > Set Active = False > Save.
+21. Return to the Rate IQ LWC for the load referenced in Step 14(h) > e) Check Expected Result
+22. TMS Admin > RateIQ Calculations > RC-4 > Set Active = False > Save.
+23. Return to the Rate IQ LWC for the load referenced in Step 14(h) > f) Check Expected Result
+24. TMS Admin > RateIQ Calculations > RC-1 > set Active to True > Save
+a. RC-2 > Set Active to True > Save
+b. RC-3 > Set Active to True > Save
+c. RC-4 > Set Active to True > Save
+25. Create a quick entry truckload shipment:
+a. Customer = Chicago Pizza
+b. Mode = Truckload
+c. Equipment Type = null
+d. 1P Stop Type = Same as Customer
+i. Expected Date = today's date
+e. 2D Stop Type = Account Address
+i. Location = Boston Beans
+ii. Expected Date = 3 days from today's date
+f. Line Item Description = Bananas
+i. Weight = 15000
+g. Save
+h. note the load name for use in Steps 28, 30, 32, 34, and 37
+26. Go to the Load's Rate IQ LWC > g) Check Expected Result
+27. TMS Admin > RateIQ Calculations > RC-5 > Set Active = False > Save.
+28. Return to the Rate IQ LWC for the load referenced in Step 25(h) > h) Check Expected Result
+29. TMS Admin > RateIQ Calculations > RC-6 > Set Active = False > Save.
+30. Return to the Rate IQ LWC for the load referenced in Step 25(h) > i) Check Expected Result
+31. TMS Admin > RateIQ Calculations > RC-3 > Set Active = False > Save.
+32. Return to the Rate IQ LWC for the load referenced in Step 25(h) > j) Check Expected Result
+33. TMS Admin > RateIQ Calculations > RC-4 > Set Active = False > Save.
+34. Return to the Rate IQ LWC for the load referenced in Step 25(h) > k) Check Expected Result
+Expected Result
+1. a) Confirm the newly created Rate Calculation's Equipment Category field has a value of null
+2. b) Confirm Rate Calculation RC-1 renders on the load's Rate IQ LWC
+a. Ensure the header Equipment Category field shows Van
+3. c) Ensure Rate Calculation RC-2 renders within the LWC (FYI only: RC-1 is inactive. RC-3 does not render because Equipment Category takes precedence over Lane.)
+4. d) Ensure Rate Calculation RC-3 renders within the LWC (FYI only: RC-1 and RC-2 are inactive. RC-5 does not render because its Equipment Category (Reefer) does not match the load's Equipment Category (Van).)
+5. e) Ensure Rate Calculation RC-4 renders within the LWC (FYI only: RC-1, RC-2 and RC-3 are inactive. RC-6 does not render because its Equipment Category (Reefer) does not match the load's Equipment Category (Van).)
+6. f) Ensure no Rate Calculation renders within the LWC (FYI only: RC-1 through RC-4 are inactive. RC-5 and RC-6 do not render because the Truckload Mode's Default Equipment Category (Reefer) is only used when the load's Equipment Category is blank.)
+7. g) Confirm Rate Calculation RC-5 renders on Load B's Rate IQ LWC. The header Equipment Category field shows Reefer, derived from the Truckload Mode's Default Equipment Category (FYI only: RC-1 and RC-2 do not render because their Equipment Category (Van) does not match the Mode Default Equipment Category (Reefer).)
+8. h) Ensure Rate Calculation RC-6 renders within the LWC (FYI only: RC-5 is inactive. RC-3 does not render because Equipment Category takes precedence over Lane. RC-1 and RC-2 do not render because their Equipment Category (Van) does not match the Mode Default Equipment Category (Reefer).)
+9. i) Ensure Rate Calculation RC-3 renders within the LWC (FYI only: RC-5 and RC-6 are inactive. RC-1 and RC-2 do not render because their Equipment Category (Van) does not match the Mode Default Equipment Category (Reefer).)
+10. j) Ensure Rate Calculation RC-4 renders within the LWC (FYI only: RC-5, RC-6 and RC-3 are inactive. RC-1 and RC-2 do not render because their Equipment Category (Van) does not match the Mode Default Equipment Category (Reefer).)
+11. k) Ensure no Rate Calculation renders within the LWC (FYI only: RC-5, RC-6, RC-3 and RC-4 are inactive. RC-1 and RC-2 do not render because their Equipment Category (Van) does not match the Mode Default Equipment Category (Reefer).)
+Post-Test Case Execution Steps
+1. TMS Admin > Modes > Truckload mode record > Clear Default Equipment Category back to Van > Save
+2. TMS Admin > System > RateIQ Calculations > set Active = True and Save on the following rate calculation records: Truckload Rate Calculation, US Country TL Rate Calc 976, IL - MA State TL Rate Calc 976, Chicago- Boston TL Rate Calc 976, Chicago Pizza to Boston Beans TL Rate Calc 976
+3. TMS Admin > System > RateIQ Calculations > delete RC-1, RC-2, RC-3, RC-4, RC-5, and RC-6
+
+Test 976
+est Instructions
+1. TMS Admin > System > RateIQ Calculations
+a. Select 'US Country TL Rate Calc 976'
+i. Go to Details tab
+1. Set Active = True
+2. Set Priority = 100
+3. Save
+b. Select 'IL - MA State TL Rate Calc 976'
+i. Go to Details tab
+1. Set Active = True
+2. Set Priority = 120
+3. Save
+c. Select 'Chicago- Boston TL Rate Calc 976'
+i. Go to Details tab
+1. Set Active = True
+2. Set Priority = 15
+3. Save
+d. Select 'Chicago Pizza to Boston Beans TL Rate Calc 976'
+i. Go to Details tab
+1. Set Active = True
+2. Set Priority = 20
+3. Save
+2. Create a quick entry truckload shipment:
+a. Customer = Chicago Pizza
+b. Mode = Truckload
+c. Equipment Type = Dry Van 53'
+i. FYI only the equipment type of the load must match the equipment category stated in the rate calculations (Van)
+d. 1P stop type = Same as Customer
+i. Expected Date = Today
+e. 2D stop type = Account Address
+i. Location = Boston Beans
+ii. Expected Date = 3 days from today
+f. Line item description = Bananas
+i. Weight = 15000
+g. Save your load
+3. Go to the Rate IQ LWC > a) Check Expected Results
+Expected Result
+1. a) Ensure the Chicago- Boston TL Rate Calc 976 is rendered on the shipment
+?
+Post-Test Case Execution Steps
+1. TMS Admin > System > Rate Calculations
+2. Edit US Country TL Rate Calc 976
+a. Set Active = False
+b. Set Priority = 280
+c. Save
+3. Edit MA State TL Rate Calc 976
+a. Set Active = False
+b. Set Priority = 240
+c. Save
+4. Edit Chicago - Boston TL Rate Calc 976
+a. Set Active = False
+b. Set Priority = 200
+c. Save
+5. Edit Chicago Pizza to Boston Beans TL Rate Calc 976
+a. Set Active = False
+b. Set Priority = 20
+c. Save
+
+Test 802
+Test Instructions
+1. TMS Admin > System > RateIQ Calculations >
+2. If RateIQ Calculations VFP does not render Active, Lane, Match Priority, and Last Modified Date values, Select Create New View (Otherwise, Skip to step 4) > Set the following:
+a. View Name = All Rate Calculations Details
+b. View Unique Name = All_Rate_Calculations_Details (Auto default)
+c. Filter by Owner radio button = true
+d. Fields to Display- Move the following from Available to Selected:
+i. Active
+ii. Lane
+iii. Match Priority
+iv. Last Modified Date
+e. Visible to all users (Includes partner and customer portal users) radio button = true
+3. Save
+4. Still within the RateIQ Calculations VFP, Adjust the following:
+a. Select 'Truckload Rate Calculation'
+i. Set Active = False
+ii. Save
+b. Select 'US Country TL Rate Calc 976'
+i. Set Active = True
+ii. Save
+c. Select 'IL - MA State TL Rate Calc 976'
+i. Set Active = True
+ii. Save
+d. Select 'Chicago- Boston TL Rate Calc 976'
+i. Set Active = True
+ii. Save
+e. Select 'Chicago Pizza to Boston Beans TL Rate Calc 976'
+i. Set Active = True
+ii. Save
+5. TMS Admin > System > RateIQ Calculations > View the Match Priority for the Rate Calculations > a) Check Expected Result
+6. Create a quick entry truckload shipment:
+a. Customer = Chicago Pizza
+b. Mode = Truckload
+c. Equipment Type = Dry Van 53'
+d. 1P stop type = Same as Customer
+i. Expected Date = Today
+e. 2D stop type = Account Address
+i. Location = Boston Beans
+ii. Expected Date = 3 days from today
+f. Line item description = Bananas
+i. Weight = 15000
+g. Save your load
+7. Go to the Load Rate IQ LWC > b) Check Expected Result
+Expected Result
+a) Ensure the Match Priority of each rate calculation are as follows:
+1. US Country TL Rate Calc 976 = 280
+2. IL - MA State TL Rate Calc 976 = 240
+3. Chicago- Boston TL Rate Calc 976 = 200
+4. Chicago Pizza to Boston Beans TL Rate Calc 976 = 20
+5. ?
+b) Ensure the Chicago Pizza to Boston Beans TL Rate Calc 976 was rendered on the shipment
+1. ?
+Post-Test Case Execution Steps
+1. TMS Admin > Rate IQ Calculations >
+a. Select 'US Country TL Rate Calc 976'
+i. Set Active = False
+ii. Save
+b. Select 'IL - MA State TL Rate Calc 976'
+i. Set Active = False
+ii. Save
+c. Select 'Chicago- Boston TL Rate Calc 976'
+i. Set Active = False
+ii. Save
+d. Select 'Chicago Pizza to Boston Beans TL Rate Calc 976'
+i. Set Active = False
+ii. Save
+e. Select 'Truckload Rate Calculation'
+i. Set Active = True
+ii. Save
+
+Test 1326
+Test Instructions
+1. TMS Admin > System > RateIQ Calculations > Select Truckload Rate Calculation
+a. Within the Details tab > General Information
+i. Ensure Mode = Truckload
+ii. 
+2. Create a quick entry truckload shipment:
+a. Customer = Boston Beans
+b. Mode = Drayage
+c. Equipment Type = Container 40'
+d. 1P stop type = Same as Customer
+i. Expected Date = Today
+e. 2D stop type = Account Address
+f. Location = Denver Deli Meats
+i. Expected Date = 3 days from today
+g. Line item description = Bananas
+i. Weight = 15000
+h. Save your load
+3. Go to the Load RateIQ LWC > a) Check Expected Result
+
+Expected Result
+a) Ensure no RateIQ data renders stating 'No matching rate calculation'
+
+
+
+
